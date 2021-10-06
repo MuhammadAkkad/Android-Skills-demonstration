@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.SnapHelper
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
 
@@ -34,10 +33,18 @@ class StationsFragment : Fragment(), OnListClickListener {
         stationsViewModel =
             ViewModelProvider(this).get(StationsViewModel::class.java)
 
+
         setupStationList()
         setupSearchFilter()
         setupTextObserver()
+        setUpLoadingAnimation()
         return view
+    }
+
+    private fun setUpLoadingAnimation() {
+        stationsViewModel._isLoading.observe(viewLifecycleOwner, Observer {
+            if (it) showLoading() else hideLoading()
+        })
     }
 
     private fun setupTextObserver() {
@@ -50,14 +57,15 @@ class StationsFragment : Fragment(), OnListClickListener {
         binding.stationSearchEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 adapter.filter.filter(s)
             }
         })
     }
-
 
     private fun setupStationList() {
         adapter = StationAdapter(this)
@@ -80,6 +88,14 @@ class StationsFragment : Fragment(), OnListClickListener {
 
     override fun previous(position: Int) {
         binding.stationListRv.smoothScrollToPosition(position)
+    }
+
+    private fun hideLoading() {
+        binding.contentLoadingProgressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showLoading() {
+        binding.contentLoadingProgressBar.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

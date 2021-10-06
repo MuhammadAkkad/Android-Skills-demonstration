@@ -1,18 +1,19 @@
 package com.example.a963103033239757ba10504dc3857ddc7.ui.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.Station
+import com.example.a963103033239757ba10504dc3857ddc7.databinding.StationListLayoutBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.stations.OnListClickListener
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by Muhammad AKKAD on 10/5/21.
@@ -21,53 +22,68 @@ class StationAdapter(private var listener: OnListClickListener) :
     RecyclerView.Adapter<StationAdapter.ViewHolder>(), Filterable {
     private var stations: List<Station> = listOf()
     private var originalList = listOf<Station>()
+    private lateinit var context : Context
 
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val station_list_value1_tv = itemView.findViewById<TextView>(R.id.station_list_value1_tv)
-        val station_list_value2_tv = itemView.findViewById<TextView>(R.id.station_list_value2_tv)
-
-        //val fav_btn = itemView.findViewById<TextView>(R.id.fav_btn)
-        val list_main_value = itemView.findViewById<TextView>(R.id.list_main_value)
-
-        //val travel_btn = itemView.findViewById<Button>(R.id.travel_btn)
-        val back_btn = itemView.findViewById<ImageButton>(R.id.list_back_btn)
-        val forward_btn = itemView.findViewById<ImageButton>(R.id.list_forward_btn)
+    inner class ViewHolder(itemView: StationListLayoutBinding) :
+        RecyclerView.ViewHolder(itemView.root) {
+        val _itemView = itemView
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationAdapter.ViewHolder {
-        val context = parent.context
-        val inflater = LayoutInflater.from(context)
-        val contactView = inflater.inflate(R.layout.station_list_layout, parent, false)
-        return ViewHolder(contactView)
+        context = parent.context
+        val itemBinding: StationListLayoutBinding = StationListLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(viewHolder: StationAdapter.ViewHolder, position: Int) {
-        viewHolder.station_list_value1_tv.text = stations[position].need.toString()
-        viewHolder.station_list_value2_tv.text = stations[position].capacity.toString()
-        viewHolder.list_main_value.text = stations[position].name
+        viewHolder._itemView.stationListValue1Tv.text = stations[position].need.toString()
+        viewHolder._itemView.stationListValue2Tv.text = stations[position].capacity.toString()
+        viewHolder._itemView.listMainValue.text = stations[position].name
 
+        setupFavBtn(position,viewHolder)
+        setupTravelBtn(position,viewHolder)
+        setupPositioningButtons(position, viewHolder)
+    }
+
+    private fun setupTravelBtn(position: Int, viewHolder: StationAdapter.ViewHolder) {
+        viewHolder._itemView.travelBtn.setOnClickListener {
+            Toast.makeText(context, "Travel Click!$position", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupFavBtn(position: Int, viewHolder: StationAdapter.ViewHolder) {
+        viewHolder._itemView.favBtn.setOnClickListener {
+            Toast.makeText(context,"Fav Click!$position", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupPositioningButtons(position: Int, viewHolder: ViewHolder) {
         if (position == 0)
-            viewHolder.back_btn.visibility = View.INVISIBLE
+            viewHolder._itemView.listBackBtn.visibility = View.INVISIBLE
         else
-            viewHolder.back_btn.visibility = View.VISIBLE
+            viewHolder._itemView.listBackBtn.visibility = View.VISIBLE
 
         if (position == stations.size - 1)
-            viewHolder.forward_btn.visibility = View.INVISIBLE
+            viewHolder._itemView.listForwardBtn.visibility = View.INVISIBLE
         else
-            viewHolder.forward_btn.visibility = View.VISIBLE
+            viewHolder._itemView.listForwardBtn.visibility = View.VISIBLE
 
-        viewHolder.back_btn.setOnClickListener {
+        viewHolder._itemView.listBackBtn.setOnClickListener {
             listener.previous(if (position != 0) position - 1 else position)
         }
 
-        viewHolder.forward_btn.setOnClickListener {
+        viewHolder._itemView.listForwardBtn.setOnClickListener {
             listener.next(if (position != stations.size) position + 1 else position)
         }
     }
 
-    public fun setStationListData(stations: List<Station>) {
+    fun setStationListData(stations: List<Station>) {
         this.stations = stations
         originalList = stations
         notifyDataSetChanged()
