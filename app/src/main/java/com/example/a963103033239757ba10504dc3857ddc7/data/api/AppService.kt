@@ -1,6 +1,6 @@
 package com.example.a963103033239757ba10504dc3857ddc7.data.api
 
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.Station
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,7 +11,7 @@ import retrofit2.http.GET
  */
 interface AppService {
     @GET(Constants.STATIONS)
-    fun getStations(): Call<List<Station>>
+    fun getStations(): Call<List<StationModel>>
 
     companion object {
 

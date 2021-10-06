@@ -4,33 +4,59 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.AppService
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.Station
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDao
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import retrofit2.Call
 import retrofit2.Response
 
 class StationsViewModel : ViewModel() {
-    val _isLoading = MutableLiveData<Boolean>(false)
+
+    val _isLoading = MutableLiveData(false)
+    private lateinit var db: StationDatabase
+    private lateinit var stationDao: StationDao
+    val stationList = MutableLiveData<List<StationModel>>()
+
     private var _text = MutableLiveData<String>().apply {
         value = "This is Stations Fragment"
     }
     val text: LiveData<String> = _text
 
-    val stationList = MutableLiveData<List<Station>>()
     fun getStationList() {
         _isLoading.value = true
-        AppService.create().getStations().enqueue(object : retrofit2.Callback<List<Station>> {
+        AppService.create().getStations().enqueue(object : retrofit2.Callback<List<StationModel>> {
             override fun onResponse(
-                call: Call<List<Station>>,
-                response: Response<List<Station>>
+                call: Call<List<StationModel>>,
+                response: Response<List<StationModel>>
             ) {
                 _isLoading.value = false
                 stationList.value = response.body()
             }
 
-            override fun onFailure(call: Call<List<Station>>, t: Throwable) {
+            override fun onFailure(call: Call<List<StationModel>>, t: Throwable) {
                 _isLoading.value = false
             }
-
         })
+    }
+
+    fun setDb(db: StationDatabase) {
+        this.db = db
+        stationDao = db.stationDao()
+    }
+
+    fun addToFavDbList(station: StationModel) {
+        db.stationDao().insert(station)
+    }
+
+    fun isAlreadyFav(station: StationModel): Boolean {
+        return db.stationDao().isAlreadyFav(station.name)
+    }
+
+    fun deleteFromFavDbList(station: StationModel) {
+        db.stationDao().delete(station)
+    }
+
+    fun getAllFavs() {
+        stationList.value = stationDao.getAll()
     }
 }

@@ -1,13 +1,29 @@
 package com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDao
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+
 
 class FavoriteViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Favorite Fragment"
+    private lateinit var db: StationDatabase
+    private lateinit var stationDao: StationDao
+    val stationList = MutableLiveData<List<StationModel>>()
+
+    fun setDb(db: StationDatabase) {
+        this.db = db
+        stationDao = db.stationDao()
     }
-    val text: LiveData<String> = _text
+
+    fun deleteFromFavDbList(station: StationModel) {
+        db.stationDao().delete(station)
+        stationList.apply { getAllFavs() }
+    }
+
+    fun getAllFavs() {
+        stationList.value = stationDao.getAll()
+    }
 }

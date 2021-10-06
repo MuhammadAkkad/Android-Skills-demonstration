@@ -11,11 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
+import com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation.OnFavClicked
 
 
-class StationsFragment : Fragment(), OnListClickListener {
+class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
 
     private var _binding: FragmentStationsBinding? = null
     private val binding get() = _binding!!
@@ -27,13 +30,12 @@ class StationsFragment : Fragment(), OnListClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStationsBinding.inflate(inflater, container, false)
         val view = binding.root
         stationsViewModel =
             ViewModelProvider(this).get(StationsViewModel::class.java)
-
-
+        stationsViewModel.setDb(StationDatabase.getDatabase(context))
         setupStationList()
         setupSearchFilter()
         setupTextObserver()
@@ -68,7 +70,7 @@ class StationsFragment : Fragment(), OnListClickListener {
     }
 
     private fun setupStationList() {
-        adapter = StationAdapter(this)
+        adapter = StationAdapter(this, this)
         binding.stationListRv.adapter = adapter
         stationsViewModel.getStationList()
         LinearSnapHelper().attachToRecyclerView(binding.stationListRv)
@@ -78,6 +80,11 @@ class StationsFragment : Fragment(), OnListClickListener {
             false
         )
         stationsViewModel.stationList.observe(viewLifecycleOwner, {
+            for (s in it) {
+                if (stationsViewModel.isAlreadyFav(s)) {
+                    s.isFav = true
+                }
+            }
             adapter.setStationListData(it)
         })
     }
@@ -101,6 +108,13 @@ class StationsFragment : Fragment(), OnListClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onFavClick(station: StationModel) {
+        if (!stationsViewModel.isAlreadyFav(station))
+            stationsViewModel.addToFavDbList(station)
+        else
+            stationsViewModel.deleteFromFavDbList(station)
     }
 }
 

@@ -6,7 +6,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.example.a963103033239757ba10504dc3857ddc7.R
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,3 +30,5 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
     }
 }
+
+
