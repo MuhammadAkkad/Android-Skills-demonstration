@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.stations
+package com.example.a963103033239757ba10504dc3857ddc7.ui.stations
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

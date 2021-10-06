@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.activities
+package com.example.a963103033239757ba10504dc3857ddc7.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

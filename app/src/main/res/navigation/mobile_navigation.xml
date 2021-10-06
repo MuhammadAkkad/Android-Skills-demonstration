@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_stations"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.stations.StationsFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.stations.StationsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_stations" />
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.favoriteStation.FavoriteFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation.FavoriteFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_favorite" />
 

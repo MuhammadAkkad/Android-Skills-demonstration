@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.favoriteStation
+package com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation
 
 import android.os.Bundle
 import android.view.LayoutInflater

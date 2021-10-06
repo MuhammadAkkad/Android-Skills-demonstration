@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.Station
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.StationListLayoutBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.activities.ui.stations.OnListClickListener
+import com.example.a963103033239757ba10504dc3857ddc7.ui.stations.OnListClickListener
 import java.util.*
 import kotlin.collections.ArrayList
 
