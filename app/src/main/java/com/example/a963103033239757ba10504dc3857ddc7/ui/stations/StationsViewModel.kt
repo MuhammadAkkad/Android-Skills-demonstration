@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.AppService
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDao
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDao
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import retrofit2.Call
 import retrofit2.Response
@@ -13,8 +13,8 @@ import retrofit2.Response
 class StationsViewModel : ViewModel() {
 
     val _isLoading = MutableLiveData(false)
-    private lateinit var db: StationDatabase
-    private lateinit var stationDao: StationDao
+    private lateinit var db: FavStationDatabase
+    private lateinit var favStationDao: FavStationDao
     val stationList = MutableLiveData<List<StationModel>>()
 
     private var _text = MutableLiveData<String>().apply {
@@ -39,9 +39,9 @@ class StationsViewModel : ViewModel() {
         })
     }
 
-    fun setDb(db: StationDatabase) {
+    fun setDb(db: FavStationDatabase) {
         this.db = db
-        stationDao = db.stationDao()
+        favStationDao = db.stationDao()
     }
 
     fun addToFavDbList(station: StationModel) {
@@ -57,6 +57,6 @@ class StationsViewModel : ViewModel() {
     }
 
     fun getAllFavs() {
-        stationList.value = stationDao.getAll()
+        stationList.value = favStationDao.getAll()
     }
 }

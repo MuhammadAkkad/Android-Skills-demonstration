@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 /**
  * Created by Muhammad AKKAD on 10/5/21.
  */
-@Entity(tableName = "station_table")
+@Entity(tableName = "fav_station_table")
 data class StationModel(
     @PrimaryKey val name: String,
     val coordinateX: Double,

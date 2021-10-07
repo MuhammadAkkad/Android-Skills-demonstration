@@ -2,20 +2,21 @@ package com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDao
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDao
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 
 
 class FavoriteViewModel : ViewModel() {
 
-    private lateinit var db: StationDatabase
-    private lateinit var stationDao: StationDao
+    private lateinit var db: FavStationDatabase
+    private lateinit var favStationDao: FavStationDao
     val stationList = MutableLiveData<List<StationModel>>()
+    val isEmptyList = MutableLiveData(false)
 
-    fun setDb(db: StationDatabase) {
+    fun setDb(db: FavStationDatabase) {
         this.db = db
-        stationDao = db.stationDao()
+        favStationDao = db.stationDao()
     }
 
     fun deleteFromFavDbList(station: StationModel) {
@@ -24,6 +25,7 @@ class FavoriteViewModel : ViewModel() {
     }
 
     fun getAllFavs() {
-        stationList.value = stationDao.getAll()
+        stationList.value = favStationDao.getAll()
+        isEmptyList.value = stationList.value!!.isEmpty()
     }
 }

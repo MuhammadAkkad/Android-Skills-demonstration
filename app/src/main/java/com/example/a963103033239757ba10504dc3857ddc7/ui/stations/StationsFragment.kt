@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.StationDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
@@ -35,7 +35,7 @@ class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
         val view = binding.root
         stationsViewModel =
             ViewModelProvider(this).get(StationsViewModel::class.java)
-        stationsViewModel.setDb(StationDatabase.getDatabase(context))
+        stationsViewModel.setDb(FavStationDatabase.getDatabase(context))
         setupStationList()
         setupSearchFilter()
         setupTextObserver()
@@ -51,7 +51,7 @@ class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
 
     private fun setupTextObserver() {
         stationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textStationsValue.text = it
+            binding.currentLocationTv.text = it
         })
     }
 

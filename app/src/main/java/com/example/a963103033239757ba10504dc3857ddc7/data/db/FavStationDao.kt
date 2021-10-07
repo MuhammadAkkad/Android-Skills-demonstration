@@ -7,11 +7,11 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
  * Created by Muhammad AKKAD on 10/6/21.
  */
 @Dao
-interface StationDao {
-    @Query("SELECT * FROM station_table")
+interface FavStationDao {
+    @Query("SELECT * FROM fav_station_table")
     fun getAll(): List<StationModel>
 
-    @Query("SELECT EXISTS(SELECT * FROM station_table WHERE name = :name)")
+    @Query("SELECT EXISTS(SELECT * FROM fav_station_table WHERE name = :name)")
     fun isAlreadyFav(name: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -14,7 +14,6 @@ interface AppService {
     fun getStations(): Call<List<StationModel>>
 
     companion object {
-
         fun create(): AppService {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

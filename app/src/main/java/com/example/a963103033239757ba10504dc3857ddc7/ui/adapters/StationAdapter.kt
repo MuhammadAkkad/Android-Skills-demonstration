@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
-import com.example.a963103033239757ba10504dc3857ddc7.databinding.StationListLayoutBinding
+import com.example.a963103033239757ba10504dc3857ddc7.databinding.SpaceStationListLayoutBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation.OnFavClicked
 import com.example.a963103033239757ba10504dc3857ddc7.ui.stations.OnListClickListener
 import java.util.*
@@ -29,14 +29,14 @@ class StationAdapter(
     private var originalList = listOf<StationModel>()
     private lateinit var context: Context
 
-    inner class ViewHolder(itemView: StationListLayoutBinding) :
+    inner class ViewHolder(itemView: SpaceStationListLayoutBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         val _itemView = itemView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationAdapter.ViewHolder {
         context = parent.context
-        val itemBinding: StationListLayoutBinding = StationListLayoutBinding.inflate(
+        val itemBinding: SpaceStationListLayoutBinding = SpaceStationListLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -45,9 +45,9 @@ class StationAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: StationAdapter.ViewHolder, position: Int) {
-        viewHolder._itemView.stationListValue1Tv.text = stations[position].need.toString()
-        viewHolder._itemView.stationListValue2Tv.text = stations[position].capacity.toString()
-        viewHolder._itemView.listMainValue.text = stations[position].name
+        viewHolder._itemView.stationListValue1Tv.text = stations[position].stock.toString()
+        viewHolder._itemView.universalSpaceTimeTv.text = stations[position].need.toString()
+        viewHolder._itemView.spaceStationName.text = stations[position].name
         setupFavBtn(position, viewHolder)
         setupTravelBtn(position, viewHolder)
         setupPositioningButtons(position, viewHolder)

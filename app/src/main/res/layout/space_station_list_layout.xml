@@ -43,7 +43,7 @@
                 android:textSize="@dimen/text_size_16" />
 
             <TextView
-                android:id="@+id/station_list_value2_tv"
+                android:id="@+id/universal_space_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="242EUS"
@@ -63,11 +63,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/list_main_value"
+            android:id="@+id/space_station_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="YZRFJ - 246"
             android:textColor="@color/black"
+            android:fontFamily="casual"
             android:textSize="@dimen/text_size_35"
             app:layout_constraintBottom_toTopOf="@+id/travel_btn"
             app:layout_constraintEnd_toEndOf="parent"
