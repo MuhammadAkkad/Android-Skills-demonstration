@@ -1,6 +1,7 @@
 package com.example.a963103033239757ba10504dc3857ddc7.data.db
 
 import androidx.room.*
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 
 /**
@@ -9,14 +10,17 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 @Dao
 interface FavStationDao {
     @Query("SELECT * FROM fav_station_table")
-    fun getAll(): List<StationModel>
+    fun getAll(): List<FavStationModel>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(station: FavStationModel)
 
     @Query("SELECT EXISTS(SELECT * FROM fav_station_table WHERE name = :name)")
     fun isAlreadyFav(name: String): Boolean
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(station: StationModel)
-
     @Delete
-    fun delete(station: StationModel)
+    fun delete(station: FavStationModel)
+
+    @Query("DELETE FROM fav_station_table")
+    fun nukeTable()
 }

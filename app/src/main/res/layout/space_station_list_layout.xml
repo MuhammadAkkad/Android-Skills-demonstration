@@ -35,18 +35,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/station_list_value1_tv"
+                android:id="@+id/station_list_capacity_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000/1000"
+                android:text="@string/capacity_and_stock"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
+
 
             <TextView
                 android:id="@+id/universal_space_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="242EUS"
+                android:text="@string/item_eus"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
@@ -66,7 +67,6 @@
             android:id="@+id/space_station_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YZRFJ - 246"
             android:textColor="@color/black"
             android:fontFamily="casual"
             android:textSize="@dimen/text_size_35"
@@ -81,7 +81,7 @@
             android:layout_height="30dp"
             android:layout_marginBottom="@dimen/margin_16"
             android:background="@drawable/rec_border"
-            android:text="Travel"
+            android:text="@string/travel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

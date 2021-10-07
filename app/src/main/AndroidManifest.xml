@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.963103033239757ba10504dc3857ddc7">
         <activity
-            android:name=".ui.station.StationActivity"
+            android:name=".ui.AppActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

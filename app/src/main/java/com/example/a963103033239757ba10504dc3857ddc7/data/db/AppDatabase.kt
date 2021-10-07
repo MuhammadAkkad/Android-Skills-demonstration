@@ -5,33 +5,46 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.Constants
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 
 /**
  * Created by Muhammad AKKAD on 10/6/21.
  */
-@Database(entities = [StationModel::class], version = 2, exportSchema = false)
-public abstract class FavStationDatabase : RoomDatabase() {
+@Database(
+    entities = [StationModel::class, FavStationModel::class, ShipModel::class],
+    version = 2,
+    exportSchema = false
+)
+public abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun stationDao(): FavStationDao
+    abstract fun favStationDao(): FavStationDao
+    abstract fun stationListDao(): StationListDao
+    abstract fun shipDao(): ShipDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
-        private var INSTANCE: FavStationDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context?): FavStationDatabase {
+        fun getDatabase(context: Context?): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context?.applicationContext!!,
-                    FavStationDatabase::class.java,
+                    AppDatabase::class.java,
                     Constants.DatabaseName
                 ).allowMainThreadQueries().build() // TODO coronties
                 INSTANCE = instance
                 instance
             }
         }
+    }
+     fun nukeDb(){
+        favStationDao().nukeTable()
+        stationListDao().nukeTable()
+        shipDao().nukeTable()
     }
 }
 

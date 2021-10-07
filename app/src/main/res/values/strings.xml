@@ -3,4 +3,19 @@
     <string name="title_activity_main">@string/app_name</string>
     <string name="title_home">Stations</string>
     <string name="title_dashboard">Favorite</string>
+    <string name="preference_file_key">shared_pref</string>
+    <string name="ugs">UGS:%1$s</string>
+    <string name="eus">EUS:%1$s</string>
+    <string name="ds">DS:%1$s</string>
+    <string name="cant_be_empty">Bu Alan Bos Olamaz.</string>
+    <string name="capacity_and_stock">%1$s/%2$s</string>
+    <string name="item_eus">%1$sEUS</string>
+    <string name="travel">Travel</string>
+    <string name="favorites">favorites</string>
+    <string name="favorite_list_is_empty">Favorite list is empty.</string>
+    <string name="dagitilacak_puan">Dağıtılacak puan:</string>
+    <string name="dayaniklilik">Dayanıklılık</string>
+    <string name="hiz">Hız</string>
+    <string name="kapasite">Kapasite</string>
+    <string name="devam_et">devam et</string>
 </resources>

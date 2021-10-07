@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.SpaceStationListLayoutBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.OnListClickListener
 import java.util.*
 import kotlin.collections.ArrayList
@@ -21,8 +20,7 @@ import kotlin.collections.ArrayList
  * Created by Muhammad AKKAD on 10/5/21.
  */
 class StationAdapter(
-    private var travelListener: OnListClickListener,
-    private var favListener: OnFavClicked
+    private var listener: OnListClickListener,
 ) :
     RecyclerView.Adapter<StationAdapter.ViewHolder>(), Filterable {
     private var stations: List<StationModel> = listOf()
@@ -45,8 +43,17 @@ class StationAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: StationAdapter.ViewHolder, position: Int) {
-        viewHolder._itemView.stationListValue1Tv.text = stations[position].stock.toString()
-        viewHolder._itemView.universalSpaceTimeTv.text = stations[position].need.toString()
+        viewHolder._itemView.stationListCapacityTv.text = String.format(
+            context.getString(R.string.capacity_and_stock),
+            stations[position].capacity,
+            stations[position].stock
+        )
+        viewHolder._itemView.universalSpaceTimeTv.text =
+            String.format(
+                context.getString(R.string.item_eus),
+                stations[position].need,
+            ) // TODO correct value needed
+
         viewHolder._itemView.spaceStationName.text = stations[position].name
         setupFavBtn(position, viewHolder)
         setupTravelBtn(position, viewHolder)
@@ -70,7 +77,7 @@ class StationAdapter(
         // fav button click logic.
         viewHolder._itemView.favBtn.setOnClickListener {
             stations[position].isFav = !stations[position].isFav // reverse state.
-            favListener.onFavClick(stations[position])
+            listener.addToFav(stations[position])
             setStationListData(stations)// refresh UI.
         }
     }
@@ -89,11 +96,11 @@ class StationAdapter(
 
         // arrow buttons click logic.
         viewHolder._itemView.listBackBtn.setOnClickListener {
-            travelListener.previous(if (position != 0) position - 1 else position)
+            listener.previous(if (position != 0) position - 1 else position)
         }
 
         viewHolder._itemView.listForwardBtn.setOnClickListener {
-            travelListener.next(if (position != stations.size) position + 1 else position)
+            listener.next(if (position != stations.size) position + 1 else position)
         }
     }
 

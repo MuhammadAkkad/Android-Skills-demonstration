@@ -4,15 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Created by Muhammad AKKAD on 10/5/21.
+ * Created by Muhammad AKKAD on 10/7/21.
  */
-@Entity(tableName = "station_list_table")
-data class StationModel(
+@Entity(tableName = "fav_station_table")
+data class FavStationModel(
     @PrimaryKey val name: String,
     val coordinateX: Double,
     val coordinateY: Double,
     val capacity: Long,
     val stock: Long,
     val need: Long,
-    var isFav: Boolean = false
-)
+    var isFav: Boolean
+) {}

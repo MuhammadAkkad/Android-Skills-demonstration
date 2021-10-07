@@ -16,7 +16,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="@dimen/margin_16"
         android:background="@drawable/ic_star"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,6 @@
             android:id="@+id/text_value_fav_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YFCRX"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_22" />
 
@@ -46,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
-            android:text="23euse"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_20" />
 

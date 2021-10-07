@@ -1,24 +1,27 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.station
+package com.example.a963103033239757ba10504dc3857ddc7.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
-import com.example.a963103033239757ba10504dc3857ddc7.databinding.ActivityStationBinding
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.databinding.ActivityAppBinding
 
-class StationActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityStationBinding
+    private lateinit var binding: ActivityAppBinding
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStationBinding.inflate(layoutInflater)
+        binding = ActivityAppBinding.inflate(layoutInflater)
         val view = binding.root
+        db = AppDatabase.getDatabase(this)
         setContentView(view)
         setupNavController()
+
     }
 
     private fun setupNavController() {
@@ -40,6 +43,22 @@ class StationActivity : AppCompatActivity() {
     )
 )
 setupActionBarWithNavController(navController, appBarConfiguration)*/
+    }
+
+    private fun nukeDb() {
+        db.nukeDb()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        SharedPref(this).clearSharedPrefs()
+        nukeDb()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        SharedPref(this).clearSharedPrefs()
+        nukeDb()
     }
 }
 

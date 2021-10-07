@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentFavoriteBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.FavAdapter
 
@@ -31,13 +31,18 @@ class FavoriteFragment : Fragment(), OnFavClicked {
         setupFavList()
         favoriteViewModel =
             ViewModelProvider(this).get(FavoriteViewModel()::class.java)
-        favoriteViewModel.setDb(FavStationDatabase.getDatabase(context))
+        favoriteViewModel.setDb(AppDatabase.getDatabase(context))
         favoriteViewModel.getAllFavs()
-        favoriteViewModel.stationList.observe(viewLifecycleOwner, Observer {
+
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        favoriteViewModel.favStationList.observe(viewLifecycleOwner, Observer {
             adapter.setFavListData(it)
             setUpEmptyListLayout()
         })
-        return view
     }
 
     private fun setUpEmptyListLayout() {
@@ -56,8 +61,8 @@ class FavoriteFragment : Fragment(), OnFavClicked {
         favListRv.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun onFavClick(station: StationModel) {
-        favoriteViewModel.deleteFromFavDbList(station)
+    override fun onFavClick(favStation: FavStationModel) {
+        favoriteViewModel.deleteFromFavDbList(favStation)
     }
 
     override fun onDestroyView() {

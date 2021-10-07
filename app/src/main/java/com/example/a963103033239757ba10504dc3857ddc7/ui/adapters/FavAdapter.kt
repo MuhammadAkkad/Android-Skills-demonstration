@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FavoriteListLayoutBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
 
@@ -14,7 +14,7 @@ import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.
  */
 class FavAdapter(private var listener: OnFavClicked) :
     RecyclerView.Adapter<FavAdapter.ViewHolder>() {
-    private var favStations: List<StationModel> = listOf()
+    private var favStations: List<FavStationModel> = listOf()
     private lateinit var context: Context
 
     inner class ViewHolder(itemView: FavoriteListLayoutBinding) :
@@ -40,7 +40,7 @@ class FavAdapter(private var listener: OnFavClicked) :
         }
     }
 
-    fun setFavListData(favs: List<StationModel>) {
+    fun setFavListData(favs: List<FavStationModel>) {
         this.favStations = favs
         notifyDataSetChanged()
     }
