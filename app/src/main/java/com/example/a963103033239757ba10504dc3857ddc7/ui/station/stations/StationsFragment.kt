@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.stations
+package com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations
 
 import android.os.Bundle
 import android.text.Editable
@@ -15,7 +15,7 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.db.FavStationDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
-import com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation.OnFavClicked
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
 
 
 class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
@@ -72,7 +72,6 @@ class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
     private fun setupStationList() {
         adapter = StationAdapter(this, this)
         binding.stationListRv.adapter = adapter
-        stationsViewModel.getStationList()
         LinearSnapHelper().attachToRecyclerView(binding.stationListRv)
         binding.stationListRv.layoutManager = LinearLayoutManager(
             context,
@@ -87,6 +86,11 @@ class StationsFragment : Fragment(), OnListClickListener, OnFavClicked {
             }
             adapter.setStationListData(it)
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        stationsViewModel.getStationList()
     }
 
     override fun next(position: Int) {

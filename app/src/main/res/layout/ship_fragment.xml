@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ship.ShipFragment">
+
+    <TextView
+        android:id="@+id/total_points_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dagitilacak puan : "
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_35"
+        app:layout_constraintEnd_toStartOf="@+id/total_points_value_ship_fragment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/total_points_value_ship_fragment"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/rec_border"
+        android:gravity="center"
+        android:text="13"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_35"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/total_points_title_tv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/titleDividerNoCustom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_4"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_points_title_tv" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleDividerNoCustom">
+
+        <EditText
+            android:id="@+id/ship_name_et_ship_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/margin_32"
+            android:background="@drawable/rec_border"
+            android:hint="Your Ship Name"
+            android:paddingStart="@dimen/margin_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_ship_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/ship_name_et_ship_fragment"
+            tools:layout_editor_absoluteX="16dp">
+
+            <!--      damage_capacity      -->
+            <TextView
+                android:id="@+id/damage_capacity_tv_ship_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:text="Dayaniklilik"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/damage_capacity_slider_ship_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_32"
+                android:theme="@style/SliderTheme"
+                android:value="1"
+                android:stepSize="1"
+                android:valueFrom="1"
+                android:valueTo="13"
+                app:labelBehavior="floating" />
+
+            <!--      speed      -->
+            <TextView
+                android:id="@+id/speed_tv_ship_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:text="Hiz"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/speed_slider_ship_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_32"
+                android:theme="@style/SliderTheme"
+                android:value="1"
+                android:stepSize="1"
+                android:valueFrom="1"
+                android:valueTo="13"
+                app:labelBehavior="floating" />
+
+            <!--     capacity       -->
+            <TextView
+                android:id="@+id/capacity_tv_ship_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:text="Kapasite"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/capacity_slider_ship_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_32"
+                android:theme="@style/SliderTheme"
+                android:value="1"
+                android:stepSize="1"
+                android:valueFrom="1"
+                android:valueTo="13"
+                app:labelBehavior="floating" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/continue_btn_ship_fragment"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rec_border"
+            android:text="devam et"
+            android:layout_marginTop="@dimen/margin_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_ship_fragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

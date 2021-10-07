@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.SpaceStationListLayoutBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.favoriteStation.OnFavClicked
-import com.example.a963103033239757ba10504dc3857ddc7.ui.stations.OnListClickListener
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.OnListClickListener
 import java.util.*
 import kotlin.collections.ArrayList
 

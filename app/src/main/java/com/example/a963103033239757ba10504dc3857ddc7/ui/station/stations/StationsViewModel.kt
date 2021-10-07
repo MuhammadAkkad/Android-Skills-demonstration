@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.stations
+package com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,6 @@ class StationsViewModel : ViewModel() {
 
     val _isLoading = MutableLiveData(false)
     private lateinit var db: FavStationDatabase
-    private lateinit var favStationDao: FavStationDao
     val stationList = MutableLiveData<List<StationModel>>()
 
     private var _text = MutableLiveData<String>().apply {
@@ -41,7 +40,6 @@ class StationsViewModel : ViewModel() {
 
     fun setDb(db: FavStationDatabase) {
         this.db = db
-        favStationDao = db.stationDao()
     }
 
     fun addToFavDbList(station: StationModel) {
@@ -57,6 +55,6 @@ class StationsViewModel : ViewModel() {
     }
 
     fun getAllFavs() {
-        stationList.value = favStationDao.getAll()
+        stationList.value = db.stationDao().getAll()
     }
 }
