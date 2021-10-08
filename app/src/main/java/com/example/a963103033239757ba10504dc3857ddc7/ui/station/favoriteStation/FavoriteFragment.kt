@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentFavoriteBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.FavAdapter
 
@@ -17,6 +17,7 @@ import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.FavAdapter
 class FavoriteFragment : Fragment(), OnFavClicked {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var viewModelFactory: ViewModelFactory
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: FavAdapter
@@ -29,16 +30,19 @@ class FavoriteFragment : Fragment(), OnFavClicked {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val view = binding.root
         setupFavList()
-        favoriteViewModel =
-            ViewModelProvider(this).get(FavoriteViewModel()::class.java)
-        favoriteViewModel.setDb(AppDatabase.getDatabase(context))
-        favoriteViewModel.getAllFavs()
+        /*favoriteViewModel =
+            ViewModelProvider(this).get(FavoriteViewModel(AppDatabase.getDatabase(context))::class.java)*/
+
+        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
+        favoriteViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(FavoriteViewModel::class.java)
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
+        favoriteViewModel.getAllFavs()
         favoriteViewModel.favStationList.observe(viewLifecycleOwner, Observer {
             adapter.setFavListData(it)
             setUpEmptyListLayout()
@@ -47,7 +51,7 @@ class FavoriteFragment : Fragment(), OnFavClicked {
 
     private fun setUpEmptyListLayout() {
         favoriteViewModel.isEmptyList.observe(viewLifecycleOwner, Observer {
-            when (it) {
+            when (favoriteViewModel.favStationList.value?.isEmpty()) {
                 true -> binding.favListIsEmptyEt.visibility = View.VISIBLE
                 false -> binding.favListIsEmptyEt.visibility = View.INVISIBLE
             }
@@ -61,7 +65,7 @@ class FavoriteFragment : Fragment(), OnFavClicked {
         favListRv.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun onFavClick(favStation: FavStationModel) {
+    override fun onFavClick(favStation: StationModel) {
         favoriteViewModel.deleteFromFavDbList(favStation)
     }
 

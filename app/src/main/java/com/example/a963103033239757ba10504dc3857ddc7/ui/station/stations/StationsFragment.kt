@@ -18,13 +18,17 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.SharedPref
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 
 class StationsFragment : Fragment(), OnListClickListener {
 
     private var _binding: FragmentStationsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var stationsViewModel: StationsViewModel
+    private lateinit var viewModel: StationsViewModel
+    private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var adapter: StationAdapter
     private lateinit var shipObject: ShipModel
 
@@ -35,20 +39,15 @@ class StationsFragment : Fragment(), OnListClickListener {
     ): View {
         _binding = FragmentStationsBinding.inflate(inflater, container, false)
         val view = binding.root
-        stationsViewModel =
-            ViewModelProvider(this).get(StationsViewModel::class.java)
-        stationsViewModel.setDb(AppDatabase.getDatabase(context))
 
-        setValues()
-        setupSearchFilter()
-        setUpLoadingAnimation()
+        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(StationsViewModel::class.java)
         return view
     }
 
-    private fun setValues() {
-        shipObject = stationsViewModel.getShip()
-
-        binding.stationNameTv.text = shipObject.name
+    private fun setObservers() {
+        /*binding.stationNameTv.text = shipObject.name
         binding.ugsValTv.text = String.format(
             this.getString(R.string.ugs),
             shipObject.durability * 10000
@@ -63,15 +62,31 @@ class StationsFragment : Fragment(), OnListClickListener {
         )
 
         binding.damageCapacityTv.text = "100" // default value.
-        binding.currentLocationTv.text = shipObject.currentLocation
-    }
+        binding.currentLocationTv.text = shipObject.currentLocation*/
+        //setUpLoadingAnimation
 
-    private fun setUpLoadingAnimation() {
-        stationsViewModel._isLoading.observe(viewLifecycleOwner, Observer {
-            if (it) showLoading() else hideLoading()
+
+        viewModel.stationList.observe(viewLifecycleOwner, {
+            for (s in it) {
+                if (viewModel.isAlreadyFav(s)) {
+                    s.isFav = true
+                }
+            }
+            adapter.setStationListData(it)  // refresh adapter accordingly.
         })
-    }
 
+        viewModel.shipLiveData.observe(viewLifecycleOwner, {
+            binding.stationNameTv.text = it.name
+            binding.ugsValTv.text = it.durability.toString()
+            binding.eusValTv.text = it.capacity.toString()
+            binding.dsValTv.text = it.speed.toString()
+
+            binding.damageCapacityTv.text = it.damageCapacity.toString()
+            binding.currentLocationTv.text = it.currentLocation
+            shipObject = it // update ship object // TODO make better solution
+        })
+        viewModel.getShip()
+    }
 
     private fun setupSearchFilter() {
         binding.stationSearchEt.addTextChangedListener(object : TextWatcher {
@@ -87,7 +102,7 @@ class StationsFragment : Fragment(), OnListClickListener {
         })
     }
 
-    private fun setupStationList() {
+    private fun setupRecyclerView() {
         adapter = StationAdapter(this)
         binding.stationListRv.adapter = adapter
         LinearSnapHelper().attachToRecyclerView(binding.stationListRv)
@@ -96,24 +111,14 @@ class StationsFragment : Fragment(), OnListClickListener {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        stationsViewModel.stationList.observe(viewLifecycleOwner, {
-            for (s in it) {
-                if (stationsViewModel.isAlreadyFav(s)) {
-                    s.isFav = true
-                }
-            }
-            adapter.setStationListData(it)
-            SharedPref(this.requireActivity()).setBoolean()
-        })
     }
 
     override fun onStart() {
         super.onStart()
-        setupStationList()
-        if (!SharedPref(this.requireActivity()).getBoolean())
-            stationsViewModel.getStationListFromApi()
-        else
-            adapter.setStationListData(stationsViewModel.getStationListFromDb())
+        setupRecyclerView()
+        viewModel.getStationListFromDb()
+        setObservers()
+        setupSearchFilter()
     }
 
     override fun next(position: Int) {
@@ -125,19 +130,19 @@ class StationsFragment : Fragment(), OnListClickListener {
     }
 
     override fun addToFav(station: StationModel) {
-        if (!stationsViewModel.isAlreadyFav(station))
-            stationsViewModel.addToFavDbList(station)
+        if (!viewModel.isAlreadyFav(station))
+            viewModel.favoriteItem(station)
         else
-            stationsViewModel.deleteFromFavDbList(station)
+            viewModel.unFavoriateItem(station)
 
     }
 
-    private fun hideLoading() {
-        binding.contentLoadingProgressBar.visibility = View.INVISIBLE
-    }
-
-    private fun showLoading() {
-        binding.contentLoadingProgressBar.visibility = View.VISIBLE
+    override fun onTravelClick(station: StationModel) {
+        if (shipObject.currentLocation.toLowerCase(Locale.ROOT) != station.name.toLowerCase(Locale.ROOT))
+            viewModel.travel(shipObject, station)
+        else
+            Snackbar.make(binding.root, "You Already on ${station.name}", Snackbar.LENGTH_SHORT)
+                .show()
     }
 
     override fun onDestroyView() {

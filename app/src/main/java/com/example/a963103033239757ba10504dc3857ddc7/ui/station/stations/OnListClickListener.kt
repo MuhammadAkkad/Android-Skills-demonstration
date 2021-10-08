@@ -8,5 +8,6 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 interface OnListClickListener {
     fun next(position: Int)
     fun previous(position: Int)
-    fun addToFav(station :StationModel)
+    fun addToFav(station: StationModel)
+    fun onTravelClick(station: StationModel)
 }

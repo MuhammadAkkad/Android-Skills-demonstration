@@ -5,16 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.Constants
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.FavStationModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.db.StationListDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Created by Muhammad AKKAD on 10/6/21.
  */
 @Database(
-    entities = [StationModel::class,  ShipModel::class],
+    entities = [StationModel::class, ShipModel::class],
     version = 2,
     exportSchema = false
 )
@@ -41,9 +42,13 @@ public abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-     suspend fun nukeDb(){
-        stationListDao().nukeTable()
-        shipDao().nukeTable()
+
+    fun nukeDb() {
+        val scope = CoroutineScope(Dispatchers.Default)
+        scope.launch {
+            stationListDao().nukeTable()
+            shipDao().nukeTable()
+        }
     }
 }
 

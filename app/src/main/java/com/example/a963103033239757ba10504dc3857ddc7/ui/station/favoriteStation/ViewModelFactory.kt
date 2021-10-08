@@ -1,6 +1,5 @@
-package com.example.a963103033239757ba10504dc3857ddc7.main.ui.station.favoriteStation
+package com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase

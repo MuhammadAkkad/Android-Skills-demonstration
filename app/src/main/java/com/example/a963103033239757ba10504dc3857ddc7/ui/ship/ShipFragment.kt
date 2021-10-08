@@ -11,9 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
+import com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipViewModel
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 

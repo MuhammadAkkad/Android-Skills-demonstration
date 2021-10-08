@@ -62,7 +62,7 @@ class StationAdapter(
 
     private fun setupTravelBtn(position: Int, viewHolder: StationAdapter.ViewHolder) {
         viewHolder._itemView.travelBtn.setOnClickListener {
-            Toast.makeText(context, "Travel Click!$position", Toast.LENGTH_SHORT).show()
+            listener.onTravelClick(stations[position])
         }
     }
 

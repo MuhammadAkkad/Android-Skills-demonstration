@@ -10,11 +10,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ship_table")
 data class ShipModel(
     @PrimaryKey val name: String,
-    val capacity: Int,
-    val speed: Int,
-    val durability: Int,
-    val damageCapacity: Int,
+    var capacity: Int,
+    var speed: Int,
+    var durability: Int,
+    var damageCapacity: Int,
     val remainingTime: Int,
-    val currentLocation: String
+    var currentLocation: String
 ) {
 }

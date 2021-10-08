@@ -1,11 +1,11 @@
-package com.example.a963103033239757ba10504dc3857ddc7.main.ui.station.stations
+package com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.ShipModel
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

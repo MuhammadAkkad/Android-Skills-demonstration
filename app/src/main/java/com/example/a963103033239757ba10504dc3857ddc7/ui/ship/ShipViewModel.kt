@@ -1,11 +1,11 @@
-package com.example.a963103033239757ba10504dc3857ddc7.main.ui.ship
+package com.example.a963103033239757ba10504dc3857ddc7.ui.ship
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.api.AppService
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.ShipModel
-import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.api.AppService
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class ShipViewModel : ViewModel() {
    private fun getStationListFromApi() {
         //CoroutineScope(Dispatchers.IO).launch {
         _isLoading.postValue(true)
-        _root_ide_package_.com.example.a963103033239757ba10504dc3857ddc7.main.data.api.AppService.create().getStations()
+        AppService.create().getStations()
             .enqueue(object : retrofit2.Callback<List<StationModel>> {
                 override fun onResponse(
                     call: Call<List<StationModel>>,
