@@ -8,8 +8,7 @@
         android:id="@+id/list_back_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_back"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/ic_arrow_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -93,8 +92,7 @@
         android:id="@+id/list_forward_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_forward"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/ic_arrow_forward"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

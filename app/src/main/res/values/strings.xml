@@ -18,4 +18,5 @@
     <string name="hiz">Hız</string>
     <string name="kapasite">Kapasite</string>
     <string name="devam_et">devam et</string>
+    <string name="loading">Loading...</string>
 </resources>

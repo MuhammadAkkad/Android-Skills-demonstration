@@ -129,10 +129,14 @@ class ShipFragment : Fragment() {
 
     private fun hideLoading() {
         binding.contentLoadingProgressBar.visibility = View.INVISIBLE
+        binding.continueBtnShipFragment.isEnabled = true
+        binding.continueBtnShipFragment.text = getString(R.string.devam_et)
     }
 
     private fun showLoading() {
         binding.contentLoadingProgressBar.visibility = View.VISIBLE
+        binding.continueBtnShipFragment.isEnabled = false
+        binding.continueBtnShipFragment.text = getString(R.string.loading)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
