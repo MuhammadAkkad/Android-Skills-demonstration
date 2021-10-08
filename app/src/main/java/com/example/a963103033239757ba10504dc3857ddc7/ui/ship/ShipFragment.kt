@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.ship
+package com.example.a963103033239757ba10504dc3857ddc7.main.ui.ship
 
 import android.os.Bundle
 import android.text.Editable
@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.main.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.main.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
@@ -28,8 +28,7 @@ class ShipFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = ShipFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +36,10 @@ class ShipFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ShipViewModel::class.java)
         viewModel.setDb(AppDatabase.getDatabase(context))
         setOnCountinueBtnClick()
+
+        viewModel._isLoading.observe(viewLifecycleOwner, Observer {
+            if (it) showLoading() else hideLoading()
+        })
     }
 
     private fun setOnCountinueBtnClick() {
@@ -99,6 +102,7 @@ class ShipFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.getData()
         viewModel.sum.observe(viewLifecycleOwner, Observer {
             binding.totalPointsValueShipFragment.text = it.toString()
         })
@@ -120,6 +124,14 @@ class ShipFragment : Fragment() {
                 viewModel.listenToValue(3, value.toInt())
             }
         })
+    }
+
+    private fun hideLoading() {
+        binding.contentLoadingProgressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showLoading() {
+        binding.contentLoadingProgressBar.visibility = View.VISIBLE
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

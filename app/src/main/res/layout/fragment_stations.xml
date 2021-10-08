@@ -53,19 +53,6 @@
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
 
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/contentLoadingProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            android:indeterminate="true"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:trackThickness="4dp" />
-
         <View
             android:id="@+id/titleDividerNoCustom"
             android:layout_width="match_parent"

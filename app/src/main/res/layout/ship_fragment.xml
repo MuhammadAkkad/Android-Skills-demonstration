@@ -43,6 +43,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/total_points_title_tv" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/contentLoadingProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleDividerNoCustom"
+        app:trackThickness="4dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -59,6 +71,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/margin_32"
             android:background="@drawable/rec_border"
+            android:text="asdasdasd"
             android:hint="Your Ship Name"
             android:paddingStart="@dimen/margin_16"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_32"
                 android:theme="@style/SliderTheme"
-                android:value="1"
+                android:value="7"
                 android:stepSize="1"
                 android:valueFrom="1"
                 android:valueTo="13"
@@ -112,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_32"
                 android:theme="@style/SliderTheme"
-                android:value="1"
+                android:value="3"
                 android:stepSize="1"
                 android:valueFrom="1"
                 android:valueTo="13"
@@ -134,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_32"
                 android:theme="@style/SliderTheme"
-                android:value="1"
+                android:value="5"
                 android:stepSize="1"
                 android:valueFrom="1"
                 android:valueTo="13"
