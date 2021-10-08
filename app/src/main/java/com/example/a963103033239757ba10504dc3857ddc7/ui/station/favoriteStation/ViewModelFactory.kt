@@ -3,6 +3,7 @@ package com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipViewModel
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.StationsViewModel
 
 /**
@@ -17,6 +18,10 @@ class ViewModelFactory(private val database: AppDatabase) : ViewModelProvider.Fa
         }
         if (modelClass.isAssignableFrom(StationsViewModel::class.java)) {
             return StationsViewModel(database) as T
+        }
+
+        if (modelClass.isAssignableFrom(ShipViewModel::class.java)) {
+            return ShipViewModel(database) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

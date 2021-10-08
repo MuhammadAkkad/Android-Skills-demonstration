@@ -26,3 +26,7 @@ interface AppService {
         }
     }
 }
+
+class RetrofitRepository {
+    suspend fun getStations() = AppService.create().getStations()
+}

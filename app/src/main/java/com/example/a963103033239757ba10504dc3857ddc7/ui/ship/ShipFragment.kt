@@ -13,14 +13,19 @@ import androidx.navigation.fragment.findNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.FavoriteViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Response
 
 class ShipFragment : Fragment() {
-
     private lateinit var viewModel: ShipViewModel
+    private lateinit var viewModelFactory: ViewModelFactory
     private var _binding: ShipFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -34,14 +39,13 @@ class ShipFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ShipViewModel::class.java)
-        viewModel.setDb(AppDatabase.getDatabase(context))
+        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(ShipViewModel::class.java)
         setOnCountinueBtnClick()
-
-        viewModel._isLoading.observe(viewLifecycleOwner, Observer {
-            if (it) showLoading() else hideLoading()
-        })
     }
+
+
 
     private fun setOnCountinueBtnClick() {
         binding.continueBtnShipFragment.setOnClickListener {
@@ -103,7 +107,20 @@ class ShipFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getData()
+        viewModel.checkForDataAvailability()
+
+        viewModel.getStationListFromApi().observe(viewLifecycleOwner, Observer {
+            it.enqueue(object : retrofit2.Callback<List<StationModel>> {
+                override fun onResponse(
+                    call: Call<List<StationModel>>,
+                    response: Response<List<StationModel>>
+                ) {
+                    viewModel.saveStationListToDb(response.body())
+                }
+                override fun onFailure(call: Call<List<StationModel>>, t: Throwable) {
+                }
+            })
+        })
         viewModel.sum.observe(viewLifecycleOwner, Observer {
             binding.totalPointsValueShipFragment.text = it.toString()
         })
@@ -125,6 +142,10 @@ class ShipFragment : Fragment() {
                 viewModel.listenToValue(3, value.toInt())
             }
         })
+
+        viewModel._isLoading.observe(viewLifecycleOwner, Observer {
+            if (it) showLoading() else hideLoading()
+        })
     }
 
     private fun hideLoading() {
@@ -138,10 +159,4 @@ class ShipFragment : Fragment() {
         binding.continueBtnShipFragment.isEnabled = false
         binding.continueBtnShipFragment.text = getString(R.string.loading)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
-
 }
