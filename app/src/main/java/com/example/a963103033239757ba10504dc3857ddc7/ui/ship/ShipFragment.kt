@@ -108,19 +108,19 @@ class ShipFragment : Fragment() {
             binding.totalPointsValueShipFragment.text = it.toString()
         })
 
-        binding.damageCapacitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->
+        binding.damageCapacitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { _, value, _ ->
             run {
                 viewModel.listenToValue(1, value.toInt())
             }
         })
 
-        binding.speedSliderShipFragment.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->
+        binding.speedSliderShipFragment.addOnChangeListener(Slider.OnChangeListener { _, value, _ ->
             run {
                 viewModel.listenToValue(2, value.toInt())
             }
         })
 
-        binding.capacitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->
+        binding.capacitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { _, value, _ ->
             run {
                 viewModel.listenToValue(3, value.toInt())
             }

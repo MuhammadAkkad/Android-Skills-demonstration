@@ -25,7 +25,7 @@ class ShipViewModel : ViewModel() {
         this.db = db
     }
 
-    fun getData(){
+    fun getData() {
         val scope = CoroutineScope(Dispatchers.Default)
         scope.launch {
             val list = db.stationListDao().getAll()
@@ -34,7 +34,8 @@ class ShipViewModel : ViewModel() {
             else getStationListFromApi()
         }
     }
-   private fun getStationListFromApi() {
+
+    private fun getStationListFromApi() {
         //CoroutineScope(Dispatchers.IO).launch {
         _isLoading.postValue(true)
         AppService.create().getStations()

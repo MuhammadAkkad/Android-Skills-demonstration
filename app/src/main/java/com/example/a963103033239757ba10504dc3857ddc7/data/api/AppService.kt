@@ -9,6 +9,9 @@ import retrofit2.http.GET
 /**
  * Created by Muhammad AKKAD on 10/5/21.
  */
+/**
+ * Created by Muhammad AKKAD on 10/5/21.
+ */
 interface AppService {
     @GET(Constants.STATIONS)
     fun getStations(): Call<List<StationModel>>

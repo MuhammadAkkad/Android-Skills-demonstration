@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  * Created by Muhammad AKKAD on 10/6/21.
  */
 @Database(
-    entities = [StationModel::class, ShipModel::class],
+    entities = [StationModel::class,  ShipModel::class],
     version = 2,
     exportSchema = false
 )
@@ -42,13 +42,11 @@ public abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-
-    fun nukeDb() {
+     fun nukeDb(){
         val scope = CoroutineScope(Dispatchers.Default)
         scope.launch {
-            stationListDao().nukeTable()
-            shipDao().nukeTable()
-        }
+        stationListDao().nukeTable()
+        shipDao().nukeTable()}
     }
 }
 

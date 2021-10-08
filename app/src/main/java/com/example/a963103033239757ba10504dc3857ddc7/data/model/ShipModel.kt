@@ -14,7 +14,7 @@ data class ShipModel(
     var speed: Int,
     var durability: Int,
     var damageCapacity: Int,
-    val remainingTime: Int,
+    var remainingTime: Int,
     var currentLocation: String
 ) {
 }

@@ -9,10 +9,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "station_list_table")
 data class StationModel(
     @PrimaryKey val name: String,
-    val coordinateX: Double,
-    val coordinateY: Double,
+    var coordinateX: Double,
+    var coordinateY: Double,
     var capacity: Long,
     var stock: Long,
     var need: Long,
-    var isFav: Boolean
+    var isFav: Boolean = false
 )

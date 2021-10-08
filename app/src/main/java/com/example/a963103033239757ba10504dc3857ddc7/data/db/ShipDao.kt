@@ -11,17 +11,17 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 @Dao
 interface ShipDao {
     @Query("SELECT * FROM ship_table")
-    suspend fun getShip(): ShipModel
+    fun getShip(): ShipModel
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(ship: ShipModel?)
+    @Update
+    fun update(order: ShipModel?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(ship: ShipModel)
+    fun insert(ship: ShipModel)
 
     @Delete
-    suspend fun delete(ship: ShipModel)
+    fun delete(ship: ShipModel)
 
     @Query("DELETE FROM ship_table")
-    suspend fun nukeTable()
+    fun nukeTable()
 }

@@ -61,5 +61,3 @@ setupActionBarWithNavController(navController, appBarConfiguration)*/
         nukeDb()
     }
 }
-
-

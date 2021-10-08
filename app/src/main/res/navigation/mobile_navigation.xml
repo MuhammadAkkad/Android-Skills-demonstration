@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/shipFragment"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.main.ui.ship.ShipFragment"
         android:label="ship_fragment"
         tools:layout="@layout/ship_fragment">
         <action
