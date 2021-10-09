@@ -8,9 +8,7 @@ import kotlin.math.sqrt
  * Created by Muhammad AKKAD on 10/9/21.
  */
 object TravelHelper {
-
-    fun distanceCalculater(p1: Point, p2: Point): Int { // for EUS
+    fun distanceCalculator(p1: Point, p2: Point): Int { // for EUS
         return sqrt((p1.x - p2.x).pow(2) + (p1.y - p2.y).pow(2)).toInt()
     }
-
 }

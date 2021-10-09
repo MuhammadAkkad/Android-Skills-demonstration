@@ -59,19 +59,15 @@ class StationsFragment : Fragment(), OnListClickListener {
         viewModel.shipLiveData.observe(viewLifecycleOwner, {
             shipObject = it
             binding.ugsValTv.text = String.format(
-                this.getString(R.string.ugs),
-                shipObject.capacity * 10000
+                this.getString(R.string.ugs), shipObject.spaceSuitCountUGS
             )
             binding.eusValTv.text = String.format(
-                this.getString(R.string.eus),
-                shipObject.speed * 20
+                this.getString(R.string.eus), shipObject.spaceTimeDurationEUS
             )
             binding.dsValTv.text = String.format(
-                this.getString(R.string.ds),
-                shipObject.durability * 10000
+                this.getString(R.string.ds), shipObject.durabilityTimeDS
             )
             binding.damageCapacityTv.text = shipObject.damageCapacity.toString()
-            binding.timePassedTv.text = (shipObject.durability * 10).toString()
             binding.currentLocationTv.text = shipObject.currentLocation
             binding.stationNameTv.text = shipObject.name
         })
@@ -129,10 +125,12 @@ class StationsFragment : Fragment(), OnListClickListener {
 
     override fun onTravelClick(station: StationModel) {
         if (shipObject.currentLocation.toLowerCase(Locale.ROOT) != station.name.toLowerCase(Locale.ROOT))
-            viewModel.travel(shipObject, station)
-        else
-            Snackbar.make(binding.root, "You Already on ${station.name}", Snackbar.LENGTH_SHORT)
+            viewModel.travel(station)
+        else if (station.stock == station.capacity) {
+            Snackbar.make(binding.root, "${station.name} doesn't need stock", Snackbar.LENGTH_SHORT)
                 .show()
+        }
+
     }
 
     override fun onDestroyView() {

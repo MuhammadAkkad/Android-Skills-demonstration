@@ -2,10 +2,11 @@ package com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -84,25 +85,35 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
         }
     }
 
-    fun travel(shipObject: ShipModel, station: StationModel) {
-        viewModelScope.launch {
-            val shipModel = db.shipDao().getShip() // make sure all operations are done on db data.
-            val stationModel = db.stationListDao().get(station.name)
+    fun travel(stationModel: StationModel) {
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            val ship = db.shipDao().getShip() // make sure all operations are done on db data.
+            val station = db.stationListDao().get(stationModel.name)
             // do math then update db
-            shipModel.capacity /= 2
-            shipModel.currentLocation = station.name
-            shipModel.damageCapacity /= 2
-            shipModel.durability /= 2  //replace with needed algorithm
-            shipModel.speed /= 2
-            stationModel.capacity /= 2
-            stationModel.need /= 2
-            stationModel.stock /= 2
+            if (ship.spaceSuitCountUGS != 0) {
+                val givenAmount =
+                    if (ship.spaceSuitCountUGS >= station.need) station.need else ship.spaceSuitCountUGS
+                station.stock += givenAmount
+                station.need -= givenAmount
+                ship.spaceSuitCountUGS -= givenAmount
+            }
+            ship.currentLocation = station.name
+            ship.spaceTimeDurationEUS -= TravelHelper.distanceCalculator(
+                Point(station.coordinateX, station.coordinateY),
+                Point(ship.x, ship.y)
+            )
 
-            db.shipDao().update(shipModel) // update db with latest data.
-            db.stationListDao().update(stationModel)
+            ship.x = station.coordinateX
+            ship.y = station.coordinateY
+
+
+
+            db.shipDao().update(ship) // update db with latest data.
+            db.stationListDao().update(station)
 
             stationList.postValue(db.stationListDao().getAll())  // trigger UI observers.
-            shipLiveData.postValue(shipModel)
+            shipLiveData.postValue(ship)
         }
     }
 }

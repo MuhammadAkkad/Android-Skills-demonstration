@@ -11,8 +11,8 @@ data class StationModel(
     @PrimaryKey val name: String,
     var coordinateX: Double,
     var coordinateY: Double,
-    var capacity: Long,
-    var stock: Long,
-    var need: Long,
+    var capacity: Int,
+    var stock: Int,
+    var need: Int,
     var isFav: Boolean = false
 )

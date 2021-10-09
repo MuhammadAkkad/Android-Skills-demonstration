@@ -63,13 +63,15 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
     fun saveShipData(shipModel: ShipModel) {
         // TODO add missing properties values here.
         val scope = CoroutineScope(Dispatchers.IO)
+        shipModel.spaceSuitCountUGS = shipModel.capacity * 10000
+        shipModel.spaceTimeDurationEUS = shipModel.speed * 20
+        shipModel.durabilityTimeDS = shipModel.durability * 10000
+        shipModel.damageCapacity = 100
+        shipModel.remainingTime = shipModel.durability * 10
+        shipModel.currentLocation = list[0].name
+        shipModel.x = list[0].coordinateX
+        shipModel.y = list[0].coordinateY
         scope.launch {
-            shipModel.spaceSuitCountUGS = shipModel.capacity * 10000
-            shipModel.spaceTimeDurationEUS = shipModel.speed * 20
-            shipModel.durabilityTimeDS = shipModel.durability * 10000
-            shipModel.damageCapacity = 100
-            shipModel.remainingTime = shipModel.durability * 10
-            shipModel.currentLocation = list[0].name
             db.shipDao().nukeTable() // start with refreshed table
             db.shipDao().insert(shipModel)
         }

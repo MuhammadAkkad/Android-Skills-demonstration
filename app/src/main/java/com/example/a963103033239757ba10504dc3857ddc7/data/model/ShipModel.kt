@@ -18,7 +18,9 @@ data class ShipModel(
     var currentLocation: String,
     var durabilityTimeDS: Int, // DS
     var spaceTimeDurationEUS: Int, // EUS
-    var spaceSuitCountUGS: Int // UGS
+    var spaceSuitCountUGS: Int, // UGS
+    var x: Double,
+    var y: Double
 ) {
     constructor(name: String, speed: Int, capacity: Int, durability: Int) : this(
         name,
@@ -30,8 +32,9 @@ data class ShipModel(
         "",
         0,
         0,
-        0
+        0,
+        0.0,
+        0.0
     ) {
-
     }
 }

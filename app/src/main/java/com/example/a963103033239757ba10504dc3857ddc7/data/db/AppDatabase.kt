@@ -36,7 +36,7 @@ public abstract class AppDatabase : RoomDatabase() {
                     context?.applicationContext!!,
                     AppDatabase::class.java,
                     Constants.DatabaseName
-                ).allowMainThreadQueries().build() // TODO coronties
+                ).build() // TODO coronties
                 INSTANCE = instance
                 instance
             }
