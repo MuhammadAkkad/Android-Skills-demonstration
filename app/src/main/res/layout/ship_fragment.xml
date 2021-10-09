@@ -101,7 +101,7 @@
                 android:textSize="@dimen/text_size_16" />
 
             <com.google.android.material.slider.Slider
-                android:id="@+id/damage_capacity_slider_ship_fragment"
+                android:id="@+id/durability_slider_ship_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_32"

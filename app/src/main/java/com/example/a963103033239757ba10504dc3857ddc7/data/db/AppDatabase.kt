@@ -43,7 +43,7 @@ public abstract class AppDatabase : RoomDatabase() {
         }
     }
      fun nukeDb(){
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
         stationListDao().nukeTable()
         shipDao().nukeTable()}

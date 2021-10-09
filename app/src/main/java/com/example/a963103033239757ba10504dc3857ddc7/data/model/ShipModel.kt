@@ -10,11 +10,28 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ship_table")
 data class ShipModel(
     @PrimaryKey val name: String,
-    var capacity: Int,
-    var speed: Int,
-    var durability: Int,
-    var damageCapacity: Int,
-    var remainingTime: Int,
-    var currentLocation: String
+    var capacity: Int, // Kapasite
+    var speed: Int, // hiz
+    var durability: Int, // dayaniklilik
+    var damageCapacity: Int, // hasar Kapisitesi: 100
+    var remainingTime: Int, // 49s
+    var currentLocation: String,
+    var durabilityTimeDS: Int, // DS
+    var spaceTimeDurationEUS: Int, // EUS
+    var spaceSuitCountUGS: Int // UGS
 ) {
+    constructor(name: String, speed: Int, capacity: Int, durability: Int) : this(
+        name,
+        capacity,
+        speed,
+        durability,
+        0,
+        0,
+        "",
+        0,
+        0,
+        0
+    ) {
+
+    }
 }

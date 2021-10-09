@@ -17,27 +17,27 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
     val shipLiveData = MutableLiveData<ShipModel>()
 
     fun getStationListFromDb() {
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             stationList.postValue(db.stationListDao().getAll())
         }
     }
 
     fun saveStationListToDb(list: List<StationModel>?) {
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch { db.stationListDao().insertAll(list) }
     }
 
 
     fun isAlreadyFav(station: StationModel): Boolean {
         var s = false
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch { s = db.stationListDao().isAlreadyFav(station.name) }
         return s
     }
 
     fun favoriteItem(s: StationModel) {
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             db.stationListDao().update(
                 StationModel(
@@ -55,7 +55,7 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
     }
 
     fun unFavoriateItem(s: StationModel) {
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             db.stationListDao().update(
                 StationModel(
@@ -73,8 +73,15 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
     }
 
     fun getShip() {
-        val scope = CoroutineScope(Dispatchers.Default)
+        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch { shipLiveData.postValue(db.shipDao().getShip()) }
+    }
+
+    fun saveShipData(shipModel: ShipModel) {
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            db.shipDao().insert(shipModel)
+        }
     }
 
     fun travel(shipObject: ShipModel, station: StationModel) {

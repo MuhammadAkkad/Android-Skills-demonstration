@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
@@ -44,23 +45,6 @@ class StationsFragment : Fragment(), OnListClickListener {
     }
 
     private fun setObservers() {
-        /*binding.stationNameTv.text = shipObject.name
-        binding.ugsValTv.text = String.format(
-            this.getString(R.string.ugs),
-            shipObject.durability * 10000
-        )
-        binding.eusValTv.text = String.format(
-            this.getString(R.string.eus),
-            shipObject.speed * 20
-        )
-        binding.dsValTv.text = String.format(
-            this.getString(R.string.ds),
-            shipObject.capacity * 10000
-        )
-
-        binding.damageCapacityTv.text = "100" // default value.
-        binding.currentLocationTv.text = shipObject.currentLocation*/
-        //setUpLoadingAnimation
 
 
         viewModel.stationList.observe(viewLifecycleOwner, {
@@ -73,14 +57,23 @@ class StationsFragment : Fragment(), OnListClickListener {
         })
 
         viewModel.shipLiveData.observe(viewLifecycleOwner, {
-            binding.stationNameTv.text = it.name
-            binding.ugsValTv.text = it.durability.toString()
-            binding.eusValTv.text = it.capacity.toString()
-            binding.dsValTv.text = it.speed.toString()
-
-            binding.damageCapacityTv.text = it.damageCapacity.toString()
-            binding.currentLocationTv.text = it.currentLocation
-            shipObject = it // update ship object // TODO make better solution
+            shipObject = it
+            binding.ugsValTv.text = String.format(
+                this.getString(R.string.ugs),
+                shipObject.capacity * 10000
+            )
+            binding.eusValTv.text = String.format(
+                this.getString(R.string.eus),
+                shipObject.speed * 20
+            )
+            binding.dsValTv.text = String.format(
+                this.getString(R.string.ds),
+                shipObject.durability * 10000
+            )
+            binding.damageCapacityTv.text = shipObject.damageCapacity.toString()
+            binding.timePassedTv.text = (shipObject.durability * 10).toString()
+            binding.currentLocationTv.text = shipObject.currentLocation
+            binding.stationNameTv.text = shipObject.name
         })
         viewModel.getShip()
     }

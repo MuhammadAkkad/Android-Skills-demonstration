@@ -44,7 +44,6 @@ class ShipFragment : Fragment() {
     }
 
 
-
     private fun setOnCountinueBtnClick() {
         binding.continueBtnShipFragment.setOnClickListener {
             var valid = true
@@ -82,18 +81,15 @@ class ShipFragment : Fragment() {
 
     private fun saveShipToDb() {
         val shipName = binding.shipNameEtShipFragment.text.toString()
-        val damageCapacity = binding.damageCapacitySliderShipFragment.value.toInt()
+        val durailioty = binding.durabilitySliderShipFragment.value.toInt()
         val speed = binding.speedSliderShipFragment.value.toInt()
         val capacity = binding.capacitySliderShipFragment.value.toInt()
         viewModel.saveShipData(
             ShipModel(
                 name = shipName.toString(),
-                damageCapacity = damageCapacity,
                 speed = speed,
                 capacity = capacity,
-                durability = 100,
-                remainingTime = 0,
-                currentLocation = "DUNYA" // TODO get real data
+                durability = durailioty,
             )
         )
         openStationsFragment()
@@ -114,7 +110,9 @@ class ShipFragment : Fragment() {
                     response: Response<List<StationModel>>
                 ) {
                     viewModel.saveStationListToDb(response.body())
+                    viewModel.list = response.body()!!
                 }
+
                 override fun onFailure(call: Call<List<StationModel>>, t: Throwable) {
                 }
             })
@@ -123,7 +121,7 @@ class ShipFragment : Fragment() {
             binding.totalPointsValueShipFragment.text = it.toString()
         })
 
-        binding.damageCapacitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { _, value, _ ->
+        binding.durabilitySliderShipFragment.addOnChangeListener(Slider.OnChangeListener { _, value, _ ->
             run {
                 viewModel.listenToValue(1, value.toInt())
             }
