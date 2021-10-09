@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.main.ui.ship
+package com.example.a963103033239757ba10504dc3857ddc7.ui.ship
 
 import android.os.Bundle
 import android.text.Editable
@@ -15,8 +15,6 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.FavoriteViewModel
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar

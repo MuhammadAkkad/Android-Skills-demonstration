@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.ui.ship.ShipFragment">
+    tools:context=".ui.ship.ShipFragment">
 
     <TextView
         android:id="@+id/total_points_title_tv"
