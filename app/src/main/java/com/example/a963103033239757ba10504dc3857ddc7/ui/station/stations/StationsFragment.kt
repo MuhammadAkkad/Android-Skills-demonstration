@@ -12,12 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
+import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -45,14 +50,19 @@ class StationsFragment : Fragment(), OnListClickListener {
     }
 
     private fun setObservers() {
-
-
         viewModel.stationList.observe(viewLifecycleOwner, {
+            var distance: Int?
             for (s in it) {
                 if (viewModel.isAlreadyFav(s)) {
                     s.isFav = true
                 }
+                distance = TravelHelper.distanceCalculator(
+                    Point(s.coordinateX, s.coordinateY),
+                    Point(shipObject.x, shipObject.y)
+                )
+                s.distance = distance
             }
+
             adapter.setStationListData(it)  // refresh adapter accordingly.
         })
 
@@ -70,8 +80,8 @@ class StationsFragment : Fragment(), OnListClickListener {
             binding.damageCapacityTv.text = shipObject.damageCapacity.toString()
             binding.currentLocationTv.text = shipObject.currentLocation
             binding.stationNameTv.text = shipObject.name
+            binding.remainingTimeTv.text = shipObject.remainingTime.toString()
         })
-        viewModel.getShip()
     }
 
     private fun setupSearchFilter() {
@@ -102,8 +112,12 @@ class StationsFragment : Fragment(), OnListClickListener {
     override fun onStart() {
         super.onStart()
         setupRecyclerView()
-        viewModel.getStationListFromDb()
         setObservers()
+        CoroutineScope(Dispatchers.IO)
+            .launch {
+                viewModel.getShip()
+                viewModel.getStationListFromDb()
+            }
         setupSearchFilter()
     }
 

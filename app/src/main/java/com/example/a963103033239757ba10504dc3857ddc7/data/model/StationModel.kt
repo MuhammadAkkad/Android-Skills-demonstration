@@ -14,5 +14,6 @@ data class StationModel(
     var capacity: Int,
     var stock: Int,
     var need: Int,
+    var distance: Int,
     var isFav: Boolean = false
 )

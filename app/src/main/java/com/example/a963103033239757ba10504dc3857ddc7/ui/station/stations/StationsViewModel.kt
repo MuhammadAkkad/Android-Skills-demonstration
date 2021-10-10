@@ -48,6 +48,7 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
                     s.capacity,
                     s.stock,
                     s.need,
+                    s.distance,
                     s.isFav
                 )
             )
@@ -66,6 +67,7 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
                     s.capacity,
                     s.stock,
                     s.need,
+                    s.distance,
                     s.isFav
                 )
             )
@@ -90,7 +92,9 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
         scope.launch {
             val ship = db.shipDao().getShip() // make sure all operations are done on db data.
             val station = db.stationListDao().get(stationModel.name)
+
             // do math then update db
+            // UGS kalan malzemeler
             if (ship.spaceSuitCountUGS != 0) {
                 val givenAmount =
                     if (ship.spaceSuitCountUGS >= station.need) station.need else ship.spaceSuitCountUGS
@@ -98,22 +102,46 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
                 station.need -= givenAmount
                 ship.spaceSuitCountUGS -= givenAmount
             }
+
+            // Current location
             ship.currentLocation = station.name
-            ship.spaceTimeDurationEUS -= TravelHelper.distanceCalculator(
+
+            // mesafe
+            val distance = TravelHelper.distanceCalculator(
                 Point(station.coordinateX, station.coordinateY),
                 Point(ship.x, ship.y)
             )
 
+            // ship EUS
+            ship.spaceTimeDurationEUS -= distance
+
+            // ship kalan zaman
+            ship.remainingTime -= distance
+
+            // ship DS
+            ship.durabilityTimeDS -= (distance * 1000)
+
+            // ship te kalan malzeme
+            ship.damageCapacity -= 10
+
+
+            // ship kordinat guncelleme
             ship.x = station.coordinateX
             ship.y = station.coordinateY
+
+
+            station.distance = TravelHelper.distanceCalculator(
+                Point(station.coordinateX, station.coordinateY),
+                Point(ship.x, ship.y)
+            )
 
 
 
             db.shipDao().update(ship) // update db with latest data.
             db.stationListDao().update(station)
 
-            stationList.postValue(db.stationListDao().getAll())  // trigger UI observers.
             shipLiveData.postValue(ship)
+            stationList.postValue(db.stationListDao().getAll())  // trigger UI observers.
         }
     }
 }

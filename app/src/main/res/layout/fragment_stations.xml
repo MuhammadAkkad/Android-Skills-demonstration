@@ -77,6 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLength="15"
                 android:hint="station name"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_24" />
@@ -88,6 +89,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_weight="2"
+                android:maxLength="100"
                 android:background="@drawable/rec_border"
                 android:hint="100"
                 android:textAlignment="center"
@@ -95,11 +97,12 @@
                 android:textSize="@dimen/text_size_16" />
 
             <TextView
-                android:id="@+id/time_passed_tv"
+                android:id="@+id/remaining_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_weight="2"
+                android:maxLength="4"
                 android:background="@drawable/rec_border"
                 android:gravity="center"
                 android:hint="24s"

@@ -50,8 +50,8 @@ class StationAdapter(
         viewHolder._itemView.universalSpaceTimeTv.text =
             String.format(
                 context.getString(R.string.item_eus),
-                stations[position].need,
-            ) // TODO correct value needed
+                stations[position].distance
+            )
 
         viewHolder._itemView.spaceStationName.text = stations[position].name
         setupFavBtn(position, viewHolder)
