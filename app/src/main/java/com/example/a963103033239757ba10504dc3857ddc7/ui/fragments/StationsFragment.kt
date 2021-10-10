@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations
+package com.example.a963103033239757ba10504dc3857ddc7.ui.fragments
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,16 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.*
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ErrorType
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
+import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnViewClickListener
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.StationsViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
 import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 
-class StationsFragment : Fragment(), OnListClickListener {
+class StationsFragment : Fragment(), OnViewClickListener {
 
     private var _binding: FragmentStationsBinding? = null
     private val binding get() = _binding!!
@@ -40,8 +45,12 @@ class StationsFragment : Fragment(), OnListClickListener {
         viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(StationsViewModel::class.java)
+        setObservers()
+        setupRecyclerView()
+        setupSearchFilter()
         return view
     }
+
 
     private fun setObservers() {
         viewModel.stationList.observe(viewLifecycleOwner, {
@@ -61,6 +70,7 @@ class StationsFragment : Fragment(), OnListClickListener {
         })
 
         viewModel.shipLiveData.observe(viewLifecycleOwner, {
+            if (it == null) return@observe
             shipObject = it
             binding.ugsValTv.text = String.format(
                 this.getString(R.string.ugs), it.spaceSuitCountUGS
@@ -128,14 +138,10 @@ class StationsFragment : Fragment(), OnListClickListener {
         )
     }
 
-    override fun onStart() {
-        super.onStart()
-        setupRecyclerView()
-        setObservers()
+
+    override fun onResume() {
+        super.onResume()
         viewModel.getData()
-        /*      if (!viewModel.gameOverLive.value!!)
-                  binding.currentLocationTv.text = getString(R.string.gameOver)*/
-        setupSearchFilter()
     }
 
     override fun next(position: Int) {
@@ -158,7 +164,7 @@ class StationsFragment : Fragment(), OnListClickListener {
         if (shipObject.currentLocation.toLowerCase(Locale.ROOT) != station.name.toLowerCase(Locale.ROOT) && station.capacity != station.stock)
             viewModel.travel(station)
         else if (station.stock == station.capacity) {
-            Snackbar.make(binding.root, "${station.name} doesn't need stock", Snackbar.LENGTH_SHORT)
+            Snackbar.make(binding.root, "${station.name}'ın stoka ihtiyacı yokur.", Snackbar.LENGTH_SHORT)
                 .show()
         }
 

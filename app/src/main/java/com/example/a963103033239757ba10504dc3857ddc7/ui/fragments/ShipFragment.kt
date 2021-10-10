@@ -1,11 +1,13 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.ship
+package com.example.a963103033239757ba10504dc3857ddc7.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +17,8 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ShipViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -54,6 +57,7 @@ class ShipFragment : Fragment() {
                         .show()
                 }
                 valid = false
+                binding.shipNameEtShipFragment.requestFocus()
             }
 
             if (binding.shipNameEtShipFragment.text.isEmpty()) {

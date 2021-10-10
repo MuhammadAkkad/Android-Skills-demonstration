@@ -1,10 +1,9 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.ship
+package com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.RetrofitRepository
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel

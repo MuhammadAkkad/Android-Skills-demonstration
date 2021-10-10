@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.SpaceStationListLayoutBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.OnListClickListener
+import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnViewClickListener
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
  * Created by Muhammad AKKAD on 10/5/21.
  */
 class StationAdapter(
-    private var listener: OnListClickListener,
+    private var listener: OnViewClickListener,
 ) :
     RecyclerView.Adapter<StationAdapter.ViewHolder>(), Filterable {
     private var stations: List<StationModel> = listOf()
@@ -68,7 +68,7 @@ class StationAdapter(
     private fun setupFavBtn(position: Int, viewHolder: StationAdapter.ViewHolder) {
         // fav button style.
         if (stations[position].isFav) {
-            viewHolder._itemView.favBtn.setBackgroundResource(R.drawable.ic_star)
+            viewHolder._itemView.favBtn.setBackgroundResource(R.drawable.ic_star_filled)
         } else {
             viewHolder._itemView.favBtn.setBackgroundResource(R.drawable.ic_star_outline)
         }

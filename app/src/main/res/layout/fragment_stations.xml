@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingStart="@dimen/margin_4"
     android:paddingEnd="@dimen/margin_4"
-    tools:context=".ui.station.stations.StationsFragment">
+    tools:context=".ui.fragments.StationsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

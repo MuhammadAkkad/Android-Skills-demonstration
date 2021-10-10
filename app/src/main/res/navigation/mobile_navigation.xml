@@ -7,35 +7,38 @@
 
     <fragment
         android:id="@+id/navigation_stations"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.StationsFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.fragments.StationsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_stations">
         <action
             android:id="@+id/action_navigation_stations_to_navigation_favorite"
             app:destination="@id/navigation_favorite"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="true" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.FavoriteFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.fragments.FavoriteFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_favorite">
         <action
-            android:id="@+id/action_navigation_favorite_to_navigation_stations"
-            app:destination="@id/navigation_stations" />
+            android:id="@+id/action_navigation_favorite_to_navigation_stations2"
+            app:destination="@id/navigation_stations"
+            app:launchSingleTop="true" />
     </fragment>
     <fragment
         android:id="@+id/shipFragment"
-        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipFragment"
+        android:name="com.example.a963103033239757ba10504dc3857ddc7.ui.fragments.ShipFragment"
         android:label="ship_fragment"
         tools:layout="@layout/ship_fragment">
         <action
             android:id="@+id/action_shipFragment_to_navigation_stations"
             app:destination="@id/navigation_stations"
             app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/fade_out"
+            app:launchSingleTop="true" />
     </fragment>
 
 </navigation>

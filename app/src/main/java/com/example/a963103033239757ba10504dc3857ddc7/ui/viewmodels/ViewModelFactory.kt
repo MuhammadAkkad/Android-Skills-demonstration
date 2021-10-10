@@ -1,10 +1,8 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation
+package com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.ui.ship.ShipViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.stations.StationsViewModel
 
 /**
  * Created by Muhammad AKKAD on 10/8/21.

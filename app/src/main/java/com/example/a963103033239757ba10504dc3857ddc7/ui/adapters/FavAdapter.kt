@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FavoriteListLayoutBinding
-import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
+import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnFavClicked
 import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 
 

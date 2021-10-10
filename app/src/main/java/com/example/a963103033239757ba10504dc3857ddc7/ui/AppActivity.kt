@@ -21,7 +21,6 @@ class AppActivity : AppCompatActivity() {
         db = AppDatabase.getDatabase(this)
         setContentView(view)
         setupNavController()
-
     }
 
     private fun setupNavController() {
@@ -32,32 +31,10 @@ class AppActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             // hide bottom nav bar on shipFragment
             if (destination.id == R.id.shipFragment) {
-                binding.navView.visibility = View.INVISIBLE
+                binding.navView.visibility = View.GONE
             } else {
                 binding.navView.visibility = View.VISIBLE
             }
         }
-        /*val appBarConfiguration = AppBarConfiguration(
-    setOf(
-        R.id.navigation_stations, R.id.navigation_favorite
-    )
-)
-setupActionBarWithNavController(navController, appBarConfiguration)*/
-    }
-
-    private fun nukeDb() {
-        db.nukeDb()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        SharedPref(this).clearSharedPrefs()
-        nukeDb()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        SharedPref(this).clearSharedPrefs()
-        nukeDb()
     }
 }

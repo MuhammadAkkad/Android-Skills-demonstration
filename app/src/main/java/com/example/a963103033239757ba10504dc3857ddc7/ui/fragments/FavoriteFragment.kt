@@ -1,4 +1,4 @@
-package com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation
+package com.example.a963103033239757ba10504dc3857ddc7.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,9 @@ import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentFavoriteBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.FavAdapter
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.FavoriteViewModel
+import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnFavClicked
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
 
 
 class FavoriteFragment : Fragment(), OnFavClicked {
