@@ -16,19 +16,16 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
     private var db = database
     val stationList = MutableLiveData<List<StationModel>>()
     val shipLiveData = MutableLiveData<ShipModel>()
+    val getDataScop = CoroutineScope(Dispatchers.IO)
 
-    fun getStationListFromDb() {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+
+
+    fun updateUI() {
+        getDataScop.launch {
+            shipLiveData.postValue(db.shipDao().getShip())
             stationList.postValue(db.stationListDao().getAll())
         }
     }
-
-    fun saveStationListToDb(list: List<StationModel>?) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch { db.stationListDao().insertAll(list) }
-    }
-
 
     fun isAlreadyFav(station: StationModel): Boolean {
         var s = false
@@ -73,18 +70,6 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
             )
         }
         // TODO find a better solution
-    }
-
-    fun getShip() {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch { shipLiveData.postValue(db.shipDao().getShip()) }
-    }
-
-    fun saveShipData(shipModel: ShipModel) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
-            db.shipDao().insert(shipModel)
-        }
     }
 
     fun travel(stationModel: StationModel) {

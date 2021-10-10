@@ -69,18 +69,18 @@ class StationsFragment : Fragment(), OnListClickListener {
         viewModel.shipLiveData.observe(viewLifecycleOwner, {
             shipObject = it
             binding.ugsValTv.text = String.format(
-                this.getString(R.string.ugs), shipObject.spaceSuitCountUGS
+                this.getString(R.string.ugs), it.spaceSuitCountUGS
             )
             binding.eusValTv.text = String.format(
-                this.getString(R.string.eus), shipObject.spaceTimeDurationEUS
+                this.getString(R.string.eus), it.spaceTimeDurationEUS
             )
             binding.dsValTv.text = String.format(
-                this.getString(R.string.ds), shipObject.durabilityTimeDS
+                this.getString(R.string.ds), it.durabilityTimeDS
             )
-            binding.damageCapacityTv.text = shipObject.damageCapacity.toString()
-            binding.currentLocationTv.text = shipObject.currentLocation
-            binding.stationNameTv.text = shipObject.name
-            binding.remainingTimeTv.text = shipObject.remainingTime.toString()
+            binding.damageCapacityTv.text = it.damageCapacity.toString()
+            binding.currentLocationTv.text = it.currentLocation
+            binding.stationNameTv.text = it.name
+            binding.remainingTimeTv.text = it.remainingTime.toString()
         })
     }
 
@@ -113,11 +113,7 @@ class StationsFragment : Fragment(), OnListClickListener {
         super.onStart()
         setupRecyclerView()
         setObservers()
-        CoroutineScope(Dispatchers.IO)
-            .launch {
-                viewModel.getShip()
-                viewModel.getStationListFromDb()
-            }
+        viewModel.updateUI()
         setupSearchFilter()
     }
 
