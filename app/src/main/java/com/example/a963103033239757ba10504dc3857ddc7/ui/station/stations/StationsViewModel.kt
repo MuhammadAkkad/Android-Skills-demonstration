@@ -120,8 +120,6 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
                 Point(ship.x, ship.y)
             )
 
-
-
             db.shipDao().update(ship) // update db with latest data.
             db.stationListDao().update(station)
 

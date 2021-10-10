@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FavoriteListLayoutBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.OnFavClicked
+import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 
 
 /**
@@ -33,8 +35,13 @@ class FavAdapter(private var listener: OnFavClicked) :
     }
 
     override fun onBindViewHolder(viewHolder: FavAdapter.ViewHolder, position: Int) {
-        viewHolder._itemView.textValueFavFragment.text = favStations[position].name
-        viewHolder._itemView.textValue2FavFragment.text = favStations[position].capacity.toString()
+        viewHolder._itemView.nameFavFragment.text = favStations[position].name
+        viewHolder._itemView.stockCapacityFavFragment.text =
+            favStations[position].capacity.toString() + "/" + favStations[position].stock.toString()
+        viewHolder._itemView.distanceFavFragment.text = TravelHelper.distanceCalculator(
+            Point(favStations[position].coordinateX, favStations[position].coordinateY),
+            Point(0.0, 0.0) // distance from earth
+        ).toString()
         viewHolder._itemView.favBtnFavFragment.setOnClickListener {
             listener.onFavClick(favStations[position])
         }
