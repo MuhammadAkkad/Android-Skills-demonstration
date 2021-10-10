@@ -58,7 +58,7 @@
             android:layout_marginTop="@dimen/margin_16"
             android:layout_marginEnd="@dimen/margin_16"
             android:layout_marginBottom="3dp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/ic_star_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

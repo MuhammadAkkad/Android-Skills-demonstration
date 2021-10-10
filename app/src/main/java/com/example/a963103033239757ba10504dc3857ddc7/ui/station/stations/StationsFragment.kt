@@ -12,17 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
-import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+import com.example.a963103033239757ba10504dc3857ddc7.data.model.*
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStationsBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
 import com.example.a963103033239757ba10504dc3857ddc7.ui.station.favoriteStation.ViewModelFactory
 import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -42,7 +37,6 @@ class StationsFragment : Fragment(), OnListClickListener {
     ): View {
         _binding = FragmentStationsBinding.inflate(inflater, container, false)
         val view = binding.root
-
         viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(StationsViewModel::class.java)
@@ -81,12 +75,32 @@ class StationsFragment : Fragment(), OnListClickListener {
             binding.currentLocationTv.text = it.currentLocation
             binding.stationNameTv.text = it.name
             binding.remainingTimeTv.text = it.remainingTime.toString()
+            checkForGameOver()
         })
 
-        viewModel.gameOverLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-           binding.listRvContainer.visibility = View.INVISIBLE
-            binding.currentLocationTv.text = getString(R.string.gameOver)
+        viewModel.gameOverLive.observe(viewLifecycleOwner, {
+            if (it) {
+                binding.listRvContainer.visibility = View.INVISIBLE
+                binding.currentLocationTv.text = getString(R.string.gameOver)
+                viewModel.clearStationList()
+            }
         })
+
+        viewModel.resStateLive.observe(viewLifecycleOwner, {
+            if (!it.errorType.equals(ErrorType.SUCCESS.errMsg))
+                Snackbar.make(binding.root, it.errorType, Snackbar.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun checkForGameOver() {
+        if (shipObject.damageCapacity == 0 ||
+            shipObject.spaceTimeDurationEUS == 0 ||
+            shipObject.spaceSuitCountUGS == 0 ||
+            shipObject.durabilityTimeDS == 0 ||
+            shipObject.remainingTime == 0
+        ) {
+            viewModel.gameOverLive.value = true
+        }
     }
 
     private fun setupSearchFilter() {
@@ -118,7 +132,9 @@ class StationsFragment : Fragment(), OnListClickListener {
         super.onStart()
         setupRecyclerView()
         setObservers()
-        viewModel.updateUI()
+        viewModel.getData()
+        /*      if (!viewModel.gameOverLive.value!!)
+                  binding.currentLocationTv.text = getString(R.string.gameOver)*/
         setupSearchFilter()
     }
 
@@ -139,7 +155,7 @@ class StationsFragment : Fragment(), OnListClickListener {
     }
 
     override fun onTravelClick(station: StationModel) {
-        if (shipObject.currentLocation.toLowerCase(Locale.ROOT) != station.name.toLowerCase(Locale.ROOT))
+        if (shipObject.currentLocation.toLowerCase(Locale.ROOT) != station.name.toLowerCase(Locale.ROOT) && station.capacity != station.stock)
             viewModel.travel(station)
         else if (station.stock == station.capacity) {
             Snackbar.make(binding.root, "${station.name} doesn't need stock", Snackbar.LENGTH_SHORT)
