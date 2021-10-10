@@ -10,10 +10,9 @@
     <LinearLayout
         android:id="@+id/ll_ship_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:layout_marginBottom="@dimen/margin_16"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="16dp">
 
@@ -71,7 +70,7 @@
             android:layout_marginBottom="@dimen/margin_32"
             android:layout_marginTop="@dimen/margin_16"
             android:background="@drawable/rec_border"
-            android:hint="Your Ship Name"
+            android:hint="@string/your_ship_name"
             android:paddingStart="@dimen/margin_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +82,8 @@
             android:id="@+id/damage_capacity_tv_ship_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_4"
             android:text="@string/dayaniklilik"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
@@ -105,7 +105,8 @@
             android:id="@+id/speed_tv_ship_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_4"
             android:text="@string/hiz"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
@@ -127,7 +128,8 @@
             android:id="@+id/capacity_tv_ship_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_4"
             android:text="@string/kapasite"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
@@ -150,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_32"
+            android:layout_marginBottom="@dimen/margin_16"
             android:background="@drawable/rec_border"
             android:text="@string/devam_et"
             app:layout_constraintEnd_toEndOf="parent"

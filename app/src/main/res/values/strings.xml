@@ -20,4 +20,5 @@
     <string name="devam_et">devam et</string>
     <string name="loading">Yükleniyor…</string>
     <string name="gameOver">Görev Tamamlandı</string>
+    <string name="your_ship_name">Uzay aracinin ismi</string>
 </resources>
