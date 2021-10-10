@@ -36,15 +36,14 @@ public abstract class AppDatabase : RoomDatabase() {
                     context?.applicationContext!!,
                     AppDatabase::class.java,
                     Constants.DatabaseName
-                ).build() // TODO coronties
+                ).build()
                 INSTANCE = instance
                 instance
             }
         }
     }
      fun nukeDb(){
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+         CoroutineScope(Dispatchers.IO).launch {
         stationListDao().nukeTable()
         shipDao().nukeTable()}
     }

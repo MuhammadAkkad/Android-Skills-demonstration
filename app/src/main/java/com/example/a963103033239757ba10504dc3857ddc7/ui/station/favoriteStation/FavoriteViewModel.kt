@@ -17,8 +17,7 @@ class FavoriteViewModel(database: AppDatabase) : ViewModel() {
 
 
     fun deleteFromFavDbList(station: StationModel) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             station.isFav = false
             db.stationListDao().update(station)
             favStationList.apply { getAllFavs() }
@@ -26,8 +25,7 @@ class FavoriteViewModel(database: AppDatabase) : ViewModel() {
     }
 
     fun getAllFavs() {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             favStationList.postValue(db.stationListDao().getFav(true))
         }
     }

@@ -25,8 +25,7 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
     lateinit var list : List<StationModel>
 
     fun checkForDataAvailability() {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
              list = db.stationListDao().getAll()
             if (list.isNotEmpty())
                 _isLoading.postValue(false)
@@ -46,8 +45,7 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
 
 
     fun saveStationListToDb(list: List<StationModel>?) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch { db.stationListDao().insertAll(list) }
+        CoroutineScope(Dispatchers.IO).launch { db.stationListDao().insertAll(list) }
     }
 
 
@@ -61,8 +59,6 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
     }
 
     fun saveShipData(shipModel: ShipModel) {
-        // TODO add missing properties values here.
-        val scope = CoroutineScope(Dispatchers.IO)
         shipModel.spaceSuitCountUGS = shipModel.capacity * 10000
         shipModel.spaceTimeDurationEUS = shipModel.speed * 20
         shipModel.durabilityTimeDS = shipModel.durability * 10000
@@ -71,7 +67,7 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
         shipModel.currentLocation = list[0].name
         shipModel.x = list[0].coordinateX
         shipModel.y = list[0].coordinateY
-        scope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             db.shipDao().nukeTable() // start with refreshed table
             db.shipDao().insert(shipModel)
         }

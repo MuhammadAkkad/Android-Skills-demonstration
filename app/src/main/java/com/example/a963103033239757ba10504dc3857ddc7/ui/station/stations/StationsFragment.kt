@@ -82,6 +82,11 @@ class StationsFragment : Fragment(), OnListClickListener {
             binding.stationNameTv.text = it.name
             binding.remainingTimeTv.text = it.remainingTime.toString()
         })
+
+        viewModel.gameOverLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+           binding.listRvContainer.visibility = View.INVISIBLE
+            binding.currentLocationTv.text = getString(R.string.gameOver)
+        })
     }
 
     private fun setupSearchFilter() {
