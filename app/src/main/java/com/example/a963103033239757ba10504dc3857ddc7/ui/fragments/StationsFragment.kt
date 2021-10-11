@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.a963103033239757ba10504dc3857ddc7.R
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ErrorType
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.Point
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
@@ -20,18 +19,17 @@ import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentStation
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.StationAdapter
 import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnViewClickListener
 import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.StationsViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
 import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
+@AndroidEntryPoint
 class StationsFragment : Fragment(), OnViewClickListener {
 
     private var _binding: FragmentStationsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: StationsViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: StationsViewModel by viewModels()
     private lateinit var adapter: StationAdapter
     private lateinit var shipObject: ShipModel
 
@@ -42,9 +40,6 @@ class StationsFragment : Fragment(), OnViewClickListener {
     ): View {
         _binding = FragmentStationsBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(StationsViewModel::class.java)
         setObservers()
         setupRecyclerView()
         setupSearchFilter()

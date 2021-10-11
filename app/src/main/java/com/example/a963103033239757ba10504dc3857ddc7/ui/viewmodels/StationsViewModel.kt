@@ -2,16 +2,18 @@ package com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.Repository
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.*
 import com.example.a963103033239757ba10504dc3857ddc7.util.TravelHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StationsViewModel(database: AppDatabase) : ViewModel() {
+@HiltViewModel
+class StationsViewModel @Inject constructor(private var db: Repository) : ViewModel() {
 
-    private var db = database
     val stationList = MutableLiveData<List<StationModel>>()
     val shipLiveData = MutableLiveData<ShipModel>()
     var gameOverLive = MutableLiveData<Boolean>(false)
@@ -21,20 +23,20 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
 
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
-            shipLiveData.postValue(db.shipDao().getShip())
-            stationList.postValue(db.stationListDao().getAll())
+            shipLiveData.postValue(db.getShip())
+            stationList.postValue(db.getAllStations())
         }
     }
 
     fun isAlreadyFav(station: StationModel): Boolean {
         var s = false
-        CoroutineScope(Dispatchers.IO).launch { s = db.stationListDao().isAlreadyFav(station.name) }
+        CoroutineScope(Dispatchers.IO).launch { s = db.isAlreadyFavStation(station.name) }
         return s
     }
 
     fun favoriteItem(s: StationModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            db.stationListDao().update(
+            db.updateStation(
                 StationModel(
                     s.name,
                     s.coordinateX,
@@ -51,7 +53,7 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
 
     fun unFavoriateItem(s: StationModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            db.stationListDao().update(
+            db.updateStation(
                 StationModel(
                     s.name,
                     s.coordinateX,
@@ -130,11 +132,11 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
             )
             CoroutineScope(Dispatchers.IO).launch {
                 // update db with latest data.
-                db.shipDao().update(shipLiveData.value!!)
-                db.stationListDao().update(station)
+                db.updateShip(shipLiveData.value!!)
+                db.updateStation(station)
                 // trigger UI observers.
                 shipLiveData.postValue(shipLiveData.value!!)
-                stationList.postValue(db.stationListDao().getAll())
+                stationList.postValue(db.getAllStations())
             }
             // endregion
         } else {
@@ -145,7 +147,7 @@ class StationsViewModel(database: AppDatabase) : ViewModel() {
 
     fun clearStationList() {
         CoroutineScope(Dispatchers.IO).launch {
-            db.stationListDao().nukeTable()
+            db.nukeStation()
         }
     }
 }

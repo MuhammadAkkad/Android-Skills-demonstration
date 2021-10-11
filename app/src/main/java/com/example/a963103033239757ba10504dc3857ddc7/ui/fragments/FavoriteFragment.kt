@@ -5,22 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.FragmentFavoriteBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.adapters.FavAdapter
-import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.FavoriteViewModel
 import com.example.a963103033239757ba10504dc3857ddc7.ui.listeners.OnFavClicked
-import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
+import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.FavoriteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FavoriteFragment : Fragment(), OnFavClicked {
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: FavAdapter
@@ -33,13 +31,6 @@ class FavoriteFragment : Fragment(), OnFavClicked {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val view = binding.root
         setupFavList()
-        /*favoriteViewModel =
-            ViewModelProvider(this).get(FavoriteViewModel(AppDatabase.getDatabase(context))::class.java)*/
-
-        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
-        favoriteViewModel = ViewModelProvider(this, viewModelFactory)
-            .get(FavoriteViewModel::class.java)
-
         return view
     }
 

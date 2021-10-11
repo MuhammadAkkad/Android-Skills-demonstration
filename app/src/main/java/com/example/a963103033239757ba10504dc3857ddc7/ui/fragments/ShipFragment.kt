@@ -1,32 +1,29 @@
 package com.example.a963103033239757ba10504dc3857ddc7.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
 import com.example.a963103033239757ba10504dc3857ddc7.databinding.ShipFragmentBinding
 import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ShipViewModel
-import com.example.a963103033239757ba10504dc3857ddc7.ui.viewmodels.ViewModelFactory
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Response
 
+@AndroidEntryPoint
 class ShipFragment : Fragment() {
-    private lateinit var viewModel: ShipViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: ShipViewModel by viewModels()
     private var _binding: ShipFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -40,9 +37,6 @@ class ShipFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelFactory = ViewModelFactory(AppDatabase.getDatabase(context))
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(ShipViewModel::class.java)
         setOnCountinueBtnClick()
     }
 

@@ -7,18 +7,19 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.a963103033239757ba10504dc3857ddc7.R
 import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
-import com.example.a963103033239757ba10504dc3857ddc7.databinding.ActivityAppBinding
+import com.example.a963103033239757ba10504dc3857ddc7.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class AppActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAppBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAppBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        db = AppDatabase.getDatabase(this)
         setContentView(view)
         setupNavController()
     }

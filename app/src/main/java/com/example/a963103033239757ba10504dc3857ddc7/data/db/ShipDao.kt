@@ -13,7 +13,7 @@ interface ShipDao {
     suspend fun getShip(): ShipModel
 
     @Update
-    suspend fun update(order: ShipModel?)
+    suspend fun update(ship: ShipModel?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(ship: ShipModel)

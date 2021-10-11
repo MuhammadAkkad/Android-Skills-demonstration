@@ -5,27 +5,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.a963103033239757ba10504dc3857ddc7.data.api.RetrofitRepository
-import com.example.a963103033239757ba10504dc3857ddc7.data.db.AppDatabase
+import com.example.a963103033239757ba10504dc3857ddc7.data.db.Repository
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.ShipModel
 import com.example.a963103033239757ba10504dc3857ddc7.data.model.StationModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
+import javax.inject.Inject
 
-class ShipViewModel(database: AppDatabase) : ViewModel() {
+@HiltViewModel
+class ShipViewModel @Inject constructor(private var db: Repository) : ViewModel() {
 
     val _isLoading = MutableLiveData(false)
-    private var db = database
+
+
     var firstSliderValue = 1
     var secondSliderValue = 1 // default initial values
     var thirdSliderValue = 1
     var sum = MutableLiveData(3)
-    lateinit var list : List<StationModel>
+    lateinit var list: List<StationModel>
 
     fun checkForDataAvailability() {
         CoroutineScope(Dispatchers.IO).launch {
-             list = db.stationListDao().getAll()
+            list = db.getAllStations()
             if (list.isNotEmpty())
                 _isLoading.postValue(false)
             else getStationListFromApi()
@@ -44,7 +48,7 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
 
 
     fun saveStationListToDb(list: List<StationModel>?) {
-        CoroutineScope(Dispatchers.IO).launch { db.stationListDao().insertAll(list) }
+        CoroutineScope(Dispatchers.IO).launch { db.insertAllStation(list) }
     }
 
 
@@ -67,8 +71,8 @@ class ShipViewModel(database: AppDatabase) : ViewModel() {
         shipModel.x = list[0].coordinateX
         shipModel.y = list[0].coordinateY
         CoroutineScope(Dispatchers.IO).launch {
-            db.shipDao().nukeTable() // start with refreshed table
-            db.shipDao().insert(shipModel)
+            db.nukeShip() // start with refreshed table
+            db.insertShip(shipModel)
         }
     }
 
