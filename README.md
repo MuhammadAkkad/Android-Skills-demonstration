@@ -7,11 +7,11 @@ this app can be referred as skills demonstration I have until the date of the la
 
 some of the technologies used:
 
-MVVM architechture
-Kotlin
-Room databse
-Hilt DI
-Coroutines
-RetroFit2
-Picasso
+MVVM architechture, 
+Kotlin, 
+Room databse, 
+Hilt DI, 
+Coroutines, 
+RetroFit2, 
+Picasso, 
 and more...
